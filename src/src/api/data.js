@@ -1,5 +1,3 @@
-// api/data.js
-
 const dataProduk = [
     {
         idWilayah: 1,
@@ -126,7 +124,7 @@ const dataProduk = [
                 nama: 'Buku',
                 harga: 30000,
                 isPaid: true,
-                kategori: ['Edukasi'],
+                kategori: ['Pendidikan'],
                 tanggal: '2025-01-02'
             },
             {
@@ -134,7 +132,7 @@ const dataProduk = [
                 nama: 'Pulpen',
                 harga: 5000,
                 isPaid: true,
-                kategori: ['Edukasi'],
+                kategori: ['Pendidikan'],
                 tanggal: '2025-01-04'
             }
         ]
@@ -142,7 +140,6 @@ const dataProduk = [
 ];
 
 /**
- * Filter data berdasarkan rentang tanggal
  * @param {String} startDate - Tanggal mulai (YYYY-MM-DD)
  * @param {String} endDate - Tanggal akhir (YYYY-MM-DD)
  * @returns Filtered data

@@ -16,7 +16,7 @@ const DashboardLayout = ({ children }) => {
                 <Header />
                 
                 {/* Content */}
-                <main className="p-4 flex-grow-1">
+                <main className="p-4 flex-grow-1 bg-body-secondary">
                     <div className="">
                         {children}
                     </div>
