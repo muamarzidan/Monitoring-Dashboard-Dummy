@@ -4,7 +4,7 @@ import Sidebar from './Sidebar';
 
 const DashboardLayout = ({ children }) => {
     return (
-        <div className="d-flex vh-100" style={{ width: '100%' }}>
+        <div className="d-flex h-100" style={{ width: '100%' }}>
             {/* Sidebar */}
             <div>
                 <Sidebar />
@@ -16,7 +16,7 @@ const DashboardLayout = ({ children }) => {
                 <Header />
                 
                 {/* Content */}
-                <main className="p-4 flex-grow-1 bg-body-secondary">
+                <main className="p-4 flex-grow-1 bg-main-layout">
                     <div className="">
                         {children}
                     </div>
