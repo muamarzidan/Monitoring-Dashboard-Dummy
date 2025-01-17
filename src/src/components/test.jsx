@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';
+import React, { useState } from 'react';
+import { AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Area } from 'recharts';
 import { filterByDate } from '../api/data';
-
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
 
 const ChartWilayah = () => {
     const [startDate, setStartDate] = useState(() => {
@@ -20,7 +17,6 @@ const ChartWilayah = () => {
     });
     const [textDateRange, setTextDateRange] = useState('Tanggal Mulai - Tanggal Akhir');
     const [filteredData, setFilteredData] = useState(filterByDate(startDate, endDate));
-    const chartRef = useRef(null);
 
     const handleFilter = () => {
         const startText = new Date(startDate).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -45,82 +41,31 @@ const ChartWilayah = () => {
         setTextDateRange('Tanggal Mulai - Tanggal Akhir');
     };
 
-    const chartData = {
-        labels: [],
-        datasets: [],
+    const generateChartData = () => {
+        const tanggalSet = new Set();
+        filteredData.forEach((wilayah) => {
+            wilayah.produkPaid.forEach((produk) => {
+                tanggalSet.add(produk.tanggal);
+            });
+        });
+
+        const labels = Array.from(tanggalSet).sort();
+        const chartData = labels.map((tanggal) => {
+            const dataPoint = { tanggal };
+
+            filteredData.forEach((wilayah) => {
+                const totalHarga = wilayah.produkPaid
+                    .filter((produk) => produk.tanggal === tanggal)
+                    .reduce((sum, produk) => sum + produk.harga, 0);
+                dataPoint[wilayah.nama] = totalHarga;
+            });
+
+            return dataPoint;
+        });
+
+        return chartData;
     };
-
-    const tanggalSet = new Set();
-    filteredData.forEach((wilayah) => {
-        wilayah.produkPaid.forEach((produk) => {
-            tanggalSet.add(produk.tanggal);
-        });
-    });
-
-    chartData.labels = Array.from(tanggalSet).sort();
-
-    filteredData.forEach((wilayah) => {
-        const dataPerTanggal = chartData.labels.map((tanggal) => {
-            const totalHarga = wilayah.produkPaid
-                .filter((produk) => produk.tanggal === tanggal)
-                .reduce((sum, produk) => sum + produk.harga, 0);
-            return totalHarga;
-        });
-
-        chartData.datasets.push({
-            label: wilayah.nama,
-            data: dataPerTanggal,
-            borderColor: 'rgba(75, 192, 192, 1)',
-            // borderColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
-            tension: 0.4,
-            fill: true,
-        });
-    });
-
-    useEffect(() => {
-        if (chartRef.current) {
-            const chart = chartRef.current;
-            const ctx = chart.ctx;
-            const chartArea = chart.chartArea;
-
-            const createGradient = () => {
-                const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-                gradient.addColorStop(0, 'rgba(75, 192, 192, 0.8)');
-                gradient.addColorStop(1, 'rgba(75, 192, 192, 0)');
-                return gradient;
-            };
-
-            const gradient = createGradient();
-            chartData.datasets = chartData.datasets.map((dataset) => ({
-                ...dataset,
-                backgroundColor: gradient,
-            }));
-        }
-    }, [chartData]);
-
-    const options = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'top',
-            },
-        },
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: 'Tanggal',
-                },
-            },
-            y: {
-                title: {
-                    display: true,
-                    text: 'Total Harga',
-                },
-            },
-        },
-    };
+    const chartData = generateChartData();
 
     return (
         <div>
@@ -156,7 +101,33 @@ const ChartWilayah = () => {
             </div>
             {chartData && (
                 <div style={{ height: '300px', width: '100%' }}>
-                    <Line ref={chartRef} data={chartData} options={options} />
+                    <ResponsiveContainer>
+                        <AreaChart data={chartData}>
+                            <defs>
+                                <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="rgba(75, 192, 192, 1)" stopOpacity={0.8} />
+                                    <stop offset="100%" stopColor="rgba(75, 192, 192, 0)" stopOpacity={0.1} />
+                                </linearGradient>
+                            </defs>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="tanggal" label={{ position: 'insideBottom', offset: -5 }} />
+                            <YAxis label={{ angle: -90, position: 'insideLeft' }} />
+                            <Tooltip formatter={(value) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value)} />
+                            <Legend />
+                            {filteredData.map((wilayah) => (
+                                <Area
+                                    key={wilayah.nama}
+                                    type="monotone"
+                                    dataKey={wilayah.nama}
+                                    stroke="rgba(75, 192, 192, 1)"
+                                    fill="url(#areaGradient)"
+                                    strokeWidth={2}
+                                    dot={{ r: 4 }}
+                                    // isAnimationActive={false}
+                                />
+                            ))}
+                        </AreaChart>
+                    </ResponsiveContainer>
                 </div>
             )}
         </div>
