@@ -144,7 +144,7 @@ const dataProduk = [
  * @param {String} endDate - Tanggal akhir (YYYY-MM-DD)
  * @returns Filtered data
  */
-const filterWilayahDate = (startDate, endDate) => {
+const filterByDate = (startDate, endDate) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
 
@@ -158,4 +158,4 @@ const filterWilayahDate = (startDate, endDate) => {
     });
 };
 
-export { dataProduk, filterWilayahDate };
+export { dataProduk, filterByDate };

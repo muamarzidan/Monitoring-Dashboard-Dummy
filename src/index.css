@@ -2,6 +2,25 @@
   --bs-font-sans-serif: 'Poppins', sans-serif;
 }
 
+.bg-main-layout {
+  background-color: #F6F6F6FF;
+}
+
+.nav-link {
+  transition: all 0.3s ease-in-out;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.nav-link:hover {
+  background-color: #0C6E84FF;
+}
+
+.nav-link.active {
+  background-color: #cff4fc;
+}
+
+
 /* a {
   font-weight: 500;
   color: #646cff;

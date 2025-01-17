@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { filterWilayahDate } from '../api/data';
+import { filterByDate } from '../api/data';
 import { Line } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -43,7 +43,6 @@ const ChartComponent = () => {
     });
 
     const chartRef = useRef(null);
-
     useEffect(() => {
         if (chartRef.current) {
             const chart = chartRef.current;
@@ -58,7 +57,6 @@ const ChartComponent = () => {
             };
 
             const gradient = createGradient();
-
             setChartData((prevData) => ({
                 ...prevData,
                 datasets: [
@@ -69,7 +67,25 @@ const ChartComponent = () => {
                 ],
             }));
         }
-    }, [chartData.labels]); // Trigger ketika labelnya berubah
+    }, [chartData.labels]);
+
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+        },
+        scales: {
+            x: {
+                beginAtZero: true,
+            },
+            y: {
+                beginAtZero: true,
+            },
+        },
+    };
 
     const handleFilter = () => {
         if (!startDate || !endDate) {
@@ -82,7 +98,7 @@ const ChartComponent = () => {
             return;
         }
 
-        const filteredData = filterWilayahDate(startDate, endDate);
+        const filteredData = filterByDate(startDate, endDate);
         const labels = filteredData.map((wilayah) => wilayah.nama);
         const data = filteredData.map((wilayah) => wilayah.produkPaid.length);
 
@@ -158,7 +174,7 @@ const ChartComponent = () => {
             </div>
             {chartData && (
                 <div className="" style={{ height: '300px', width: '100%' }}>
-                    <Line ref={chartRef} data={chartData} />
+                    <Line ref={chartRef} data={chartData} options={options}/>
                 </div>
             )}
         </>
