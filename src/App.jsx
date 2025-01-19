@@ -7,8 +7,7 @@ import AdsPage from './src/pages/Ads';
 import ProductPage from './src/pages/Product/product';
 import ProductDetailPage from './src/pages/Product/product-detail';
 import ProductRecomendationPage from './src/pages/Product/product-recomendation';
-// import WilayahPage from './src/pages/Wilayah';
-// <Route path="/wilayah" element={<WilayahPage />} />
+import WilayahPage from './src/pages/Wilayah';
 
 const App = () => {
   return (
@@ -19,6 +18,7 @@ const App = () => {
         <Route path="/product-all" element={<ProductPage />} />
         <Route path="/product/detail" element={<ProductDetailPage />} />
         <Route path="/product-recommendation" element={<ProductRecomendationPage />} />
+        <Route path="/wilayah" element={<WilayahPage />} />
       </Routes>
     </Router>
   );
