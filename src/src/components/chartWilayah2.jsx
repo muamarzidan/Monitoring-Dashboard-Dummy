@@ -123,7 +123,7 @@ const ChartWilayah = () => {
     };
 
     return (
-        <div>
+        <>
             <div className="filter d-flex justify-content-between align-items-center mb-4">
                 <div className="fw-semibold fs-4">
                     {textDateRange}
@@ -154,12 +154,46 @@ const ChartWilayah = () => {
                     </button>
                 </div>
             </div>
-            {chartData && (
+            {/* {chartData && (
                 <div style={{ height: '300px', width: '100%' }}>
                     <Line ref={chartRef} data={chartData} options={options} />
                 </div>
-            )}
-        </div>
+            )} */}
+            <div className="table-responsive">
+                <table className="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            {filteredData.map((wilayah) => (
+                                <th key={wilayah.nama}>{wilayah.nama}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {chartData.labels.map((tanggal, index) => (
+                            <tr key={index}>
+                                <td className="text-center">{tanggal}</td>
+                                {filteredData.map((wilayah) => {
+                                    const totalHarga = wilayah.produkPaid
+                                        .filter((produk) => produk.tanggal === tanggal)
+                                        .reduce((sum, produk) => sum + produk.harga, 0);
+                                    return (
+                                        <td className="text-center" key={wilayah.nama}>
+                                            {totalHarga > 0
+                                                ? new Intl.NumberFormat('id-ID', {
+                                                    style: 'currency',
+                                                    currency: 'IDR',
+                                                }).format(totalHarga)
+                                                : '-'}
+                                        </td>
+                                    );
+                                })}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 };
 

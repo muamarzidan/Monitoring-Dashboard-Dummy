@@ -1,12 +1,10 @@
-import React from 'react';
+import React from 'react'
 import DashboardLayout from '../components/DashboardLayout';
 
-const ProdukPage = () => {
+export default function HomePage() {
     return (
         <DashboardLayout>
-            <h1>Produk Page</h1>
+            <div>Home</div>
         </DashboardLayout>
-    );
+    )
 };
-
-export default ProdukPage;

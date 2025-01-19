@@ -9,7 +9,7 @@ const Header = () => {
                     src="https://www.shutterstock.com/image-vector/user-icon-trendy-flat-style-600nw-1697898655.jpg"
                     alt="Account"
                     className="rounded-circle img-fluid"
-                    style={{ cursor: 'pointer', objectFit: 'cover', width: '60px', height: '60px' }}
+                    style={{ cursor: 'pointer', objectFit: 'cover', width: '55px', height: '55px' }}
                 />
             </div>
         </nav>

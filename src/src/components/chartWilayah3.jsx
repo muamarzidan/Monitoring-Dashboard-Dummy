@@ -68,8 +68,8 @@ const ChartWilayah = () => {
     const chartData = generateChartData();
 
     return (
-        <div>
-            <div className="filter d-flex justify-content-between align-items-center mb-4">
+        <div className="d-flex flex-column gap-5">
+            <div className="filter d-flex justify-content-between align-items-center">
                 <div className="fw-semibold fs-4">
                     {textDateRange}
                 </div>
@@ -128,6 +128,30 @@ const ChartWilayah = () => {
                             ))}
                         </AreaChart>
                     </ResponsiveContainer>
+                </div>
+            )}
+            {chartData && (
+                <div className="table-responsive">
+                    <table className="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                {filteredData.map((wilayah) => (
+                                    <th key={wilayah.nama}>{wilayah.nama}</th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {chartData.map((row, index) => (
+                                <tr key={index}>
+                                    <td>{row.tanggal}</td>
+                                    {filteredData.map((wilayah) => (
+                                        <td key={wilayah.nama}>{row[wilayah.nama] ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(row[wilayah.nama]) : '-'}</td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             )}
         </div>

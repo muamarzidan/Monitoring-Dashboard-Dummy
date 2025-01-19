@@ -1,0 +1,151 @@
+{
+    "code": 0,
+    "msg": "OK",
+    "debug_detail": "",
+    "validation_error_list": null,
+    "data": {
+        "entry_list": [
+            {
+                "id_product": 132176642,
+                "product": {
+                    "name": "Udang Merah Pedas Mantap",
+                    "sku": "UMPS-132176642",
+                    "variant": [
+                        {
+                            "name": "Udang Merah Pedas Mantap - Sambal Ijo",
+                            "sell": 10,
+                            "price": 129000,
+                            "default_stock": 10,
+                            "new_stock": 0
+                        },
+                        {
+                            "name": "Udang Merah Pedas Mantap - Sambal Bawang",
+                            "sell": 5,
+                            "price": 129000,
+                            "default_stock": 10,
+                            "new_stock": 5
+                        },
+                        {
+                            "name": "Udang Merah Pedas Mantap - Sambal Matah",
+                            "sell": 5,
+                            "price": 129000,
+                            "default_stock": 10,
+                            "new_stock": 5
+                        }
+                    ]
+                },
+                "sells": 20,
+                "price": 129000,
+                "default_stock": 30,
+                "new_stock": 10,
+                "condition": "Belum ada informasi"
+            },
+            {
+                "id_product": 132023784,
+                "product": {
+                    "name": "Ikan Teri Pedas Mantap",
+                    "sku": "UMPS-132023784",
+                    "variant": [
+                        {
+                            "name": "Ikan Teri Pedas Mantap - Sambal Ijo",
+                            "sell": 10,
+                            "price": 160000,
+                            "default_stock": 10,
+                            "new_stock": 0
+                        },
+                        {
+                            "name": "Ikan Teri Pedas Mantap - Sambal Bawang",
+                            "sell": 10,
+                            "price": 160000,
+                            "default_stock": 10,
+                            "new_stock": 0
+                        },
+                        {
+                            "name": "Ikan Teri Pedas Mantap - Sambal Matah",
+                            "sell": 10,
+                            "price": 160000,
+                            "default_stock": 10,
+                            "new_stock": 0
+                        }
+                    ]
+                },
+                "sells": 30,
+                "price": 160000,
+                "default_stock": 30,
+                "new_stock": 0,
+                "condition": "Belum ada informasi"
+            },
+            {
+                "id_product": 102938476,
+                "product": {
+                    "name": "Celana pendek pria",
+                    "sku": "PPKI-102938476",
+                    "variant": [
+                        {
+                            "name": "Celana pendek pria - Hitam",
+                            "sell": 10,
+                            "price": 50000,
+                            "default_stock": 10,
+                            "new_stock": 0
+                        },
+                        {
+                            "name": "Celana pendek pria - Biru",
+                            "sell": 10,
+                            "price": 50000,
+                            "default_stock": 10,
+                            "new_stock": 0
+                        },
+                        {
+                            "name": "Celana pendek pria - Abu-abu",
+                            "sell": 9,
+                            "price": 50000,
+                            "default_stock": 10,
+                            "new_stock": 1
+                        }
+                    ]
+                },
+                "sells": 29,
+                "price": 50000,
+                "default_stock": 30,
+                "new_stock": 1,
+                "condition": "Belum ada informasi"
+            },
+            {
+                "id_product": 102938476,
+                "product": {
+                    "name": "Sarung Tangan Sepak Bola",
+                    "sku": "SRT-193648902",
+                    "variant": [
+                        {
+                            "name": "Sarung Tangan Sepak Bola - Real Madrid",
+                            "sell": 1,
+                            "price": 10000,
+                            "default_stock": 10,
+                            "new_stock": 9
+                        },
+                        {
+                            "name": "Sarung Tangan Sepak Bola - Barcelona",
+                            "sell": 2,
+                            "price": 10000,
+                            "default_stock": 10,
+                            "new_stock": 8
+                        },
+                        {
+                            "name": "Sarung Tangan Sepak Bola - Juventus",
+                            "sell": 2,
+                            "price": 10000,
+                            "default_stock": 10,
+                            "new_stock": 8
+                        }
+                    ]
+                },
+                "sells": 5,
+                "price": 10000,
+                "default_stock": 30,
+                "new_stock": 25,
+                "condition": "Baik"
+            }
+        ],
+        "total": 3
+    }
+}

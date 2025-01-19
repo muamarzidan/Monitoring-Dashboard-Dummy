@@ -4,24 +4,20 @@ import Sidebar from './Sidebar';
 
 const DashboardLayout = ({ children }) => {
     return (
-        <div className="d-flex h-100" style={{ width: '100%' }}>
+        <div className="h-100 w-100 d-flex overflow-auto mw-100" style={{}}>
             {/* Sidebar */}
-            <div>
+            <aside className="min-vh-100" style={{width: '17%'}}>
                 <Sidebar />
-            </div>
-            
+            </aside>
             {/* Main Content */}
-            <div className="d-flex flex-column flex-grow-1">
+            <main className="min-vh-100 d-flex flex-column" style={{width: '83%'}}>
                 {/* Header */}
                 <Header />
-                
                 {/* Content */}
-                <main className="p-4 flex-grow-1 bg-main-layout">
-                    <div className="">
-                        {children}
-                    </div>
-                </main>
-            </div>
+                <div className="p-4 flex-grow-1 w-100 h-100 bg-main-layout">
+                    {children}
+                </div>
+            </main>
         </div>
     );
 };

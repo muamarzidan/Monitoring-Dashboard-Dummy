@@ -58,6 +58,14 @@ const dataProduk = [
                 isPaid: true,
                 kategori: ['Elektronik'],
                 tanggal: '2025-01-09'
+            },
+            {
+                id: 4,
+                nama: 'Pakaian Dalam',
+                harga: 2000,
+                isPaid: true,
+                kategori: ['Pakaian'],
+                tanggal: '2025-01-29'
             }
         ]
     },
@@ -134,9 +142,137 @@ const dataProduk = [
                 isPaid: true,
                 kategori: ['Pendidikan'],
                 tanggal: '2025-01-04'
+            },
+            {
+                id: 3,
+                nama: 'Pensil',
+                harga: 5000,
+                isPaid: true,
+                kategori: ['Pendidikan'],
+                tanggal: '2025-01-15'
+            },
+            {
+                id: 4,
+                nama: 'Pensil Warna',
+                harga: 20000,
+                isPaid: true,
+                kategori: ['Pendidikan'],
+                tanggal: '2025-01-20'
+            },
+            {
+                id: 5,
+                nama: 'Penggaris',
+                harga: 15000,
+                isPaid: true,
+                kategori: ['Pendidikan'],
+                tanggal: '2025-01-21'
+            },
+            {
+                id: 6,
+                nama: 'Penggaris',
+                harga: 15000,
+                isPaid: true,
+                kategori: ['Pendidikan'],
+                tanggal: '2025-01-23'
+            },
+            {
+                id: 7,
+                nama: 'Penggaris',
+                harga: 15000,
+                isPaid: true,
+                kategori: ['Pendidikan'],
+                tanggal: '2025-01-26'
+            },
+            {
+                id: 8,
+                nama: 'Penghapus',
+                harga: 20000,
+                isPaid: true,
+                kategori: ['Pendidikan'],
+                tanggal: '2025-01-28'
+            },
+            {
+                id: 7,
+                nama: 'Tipe x',
+                harga: 10000,
+                isPaid: true,
+                kategori: ['Pendidikan'],
+                tanggal: '2025-01-30'
             }
         ]
-    }
+    },
+    {
+        idWilayah: 6,
+        nama: "Semarang",
+        kode: "SMG",
+        produkPaid: []
+    },
+    {
+        idWilayah: 7,
+        nama: "Palembang",
+        kode: "PLB",
+        produkPaid: []
+    },
+    {
+        idWilayah: 8,
+        nama: "Makassar",
+        kode: "MKS",
+        produkPaid: []
+    },
+    {
+        idWilayah: 9,
+        nama: "Balikpapan",
+        kode: "BPN",
+        produkPaid: []
+    },
+    {
+        idWilayah: 10,
+        nama: "Manado",
+        kode: "MND",
+        produkPaid: []
+    },
+    {
+        idWilayah: 11,
+        nama: "Pekanbaru",
+        kode: "PKU",
+        produkPaid: []
+    },
+    // {
+    //     idWilayah: 12,
+    //     nama: "Padang",
+    //     kode: "PDG",
+    //     produkPaid: []
+    // },
+    // {
+    //     idWilayah: 13,
+    //     nama: "Denpasar",
+    //     kode: "DPS",
+    //     produkPaid: []
+    // },
+    // {
+    //     idWilayah: 14,
+    //     nama: "Banjarmasin",
+    //     kode: "BJM",
+    //     produkPaid: []
+    // },
+    // {
+    //     idWilayah: 15,
+    //     nama: "Pontianak",
+    //     kode: "PTK",
+    //     produkPaid: []
+    // },
+    // {
+    //     idWilayah: 16,
+    //     nama: "Ambon",
+    //     kode: "AMQ",
+    //     produkPaid: []
+    // },
+    // {
+    //     idWilayah: 17,
+    //     nama: "Jayapura",
+    //     kode: "DJJ",
+    //     produkPaid: []
+    // }
 ];
 
 /**
