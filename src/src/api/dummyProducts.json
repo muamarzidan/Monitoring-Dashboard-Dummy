@@ -5,6 +5,42 @@
     "validation_error_list": null,
     "data": {
         "entry_list": [
+            
+            {
+                "id_product": 103842948,
+                "product": {
+                    "name": "Pulpen AEON",
+                    "sku": "PLPN-103842948",
+                    "variant": [
+                        {
+                            "name": "Pulpen AEON - Hitam",
+                            "sell": 5,
+                            "price": 10000,
+                            "default_stock": 10,
+                            "new_stock": 5
+                        },
+                        {
+                            "name": "Pulpen AEON - Biru",
+                            "sell": 2,
+                            "price": 10000,
+                            "default_stock": 10,
+                            "new_stock": 8
+                        },
+                        {
+                            "name": "Pulpen AEON - Merah",
+                            "sell": 0,
+                            "price": 10000,
+                            "default_stock": 10,
+                            "new_stock": 10
+                        }
+                    ]
+                },
+                "sells": 7,
+                "price": 10000,
+                "default_stock": 30,
+                "new_stock": 23,
+                "condition": "Sangat Baik"
+            },
             {
                 "id_product": 132176642,
                 "product": {
@@ -111,10 +147,10 @@
                 "condition": "Belum ada informasi"
             },
             {
-                "id_product": 102938476,
+                "id_product": 102384716,
                 "product": {
                     "name": "Sarung Tangan Sepak Bola",
-                    "sku": "SRT-193648902",
+                    "sku": "SRT-102384716",
                     "variant": [
                         {
                             "name": "Sarung Tangan Sepak Bola - Real Madrid",
@@ -146,6 +182,6 @@
                 "condition": "Baik"
             }
         ],
-        "total": 3
+        "total": 5
     }
 }

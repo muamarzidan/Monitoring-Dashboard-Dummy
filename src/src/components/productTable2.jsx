@@ -54,11 +54,10 @@ const ProductTable = ({ data }) => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <table className="table table-hover border">
+            <table className="table border border-2 table-borderless">
                 <thead className="thead-dark p-2">
                     <tr>
                         <th>Produk</th>
-                        <th>Varian</th>
                         <th>Penjualan</th>
                         <th>Harga</th>
                         <th>Stok</th>
@@ -69,19 +68,21 @@ const ProductTable = ({ data }) => {
                     {filteredData.map((entry) => (
                         <React.Fragment key={entry.id_product}>
                             {/* Row main products */}
-                            <tr>
-                                <td rowSpan={entry.product.variant.length + 1} className="products-main-link">
-                                    <Link to={`/product/detail/${entry.id_product}`} className="text-decoration-none text-black fw-semibold">
-                                        <div className="d-flex">
-                                            <img src="https://marketplace.canva.com/EAF5Wm8F050/1/0/1600w/canva-biru-modern-produk-skincare-kiriman-instagram-mPSe80ya_0A.jpg" alt={entry.product.name} className="rounded" style={{ width: "70px", height: "70px" }} />
-                                        </div>
+                            <tr className="border border-2">
+                                <td id="main-products" rowSpan={entry.product.variant.length + 1} className="products-main-link">
+                                    <Link to={`/product/detail/${entry.id_product}`} className="text-decoration-none text-black fw-medium d-flex flex-column">
+                                        <img src="https://marketplace.canva.com/EAF5Wm8F050/1/0/1600w/canva-biru-modern-produk-skincare-kiriman-instagram-mPSe80ya_0A.jpg" alt={entry.product.name} className="rounded" style={{ width: "70px", height: "70px" }} />
                                         <div className="d-flex flex-column">
-                                                {entry.product.name}
-                                            <small className="text-body-secondary">SKU: {entry.product.sku}</small>
+                                                <span>{entry.product.name}</span>
+                                                <small className="text-body-secondary border-bottom border-2 pb-1">SKU: {entry.product.sku}</small>
+                                                {entry.product.variant.map((variant, index) => (
+                                                    <tr key={`${entry.id_product}-variant-${index}`}>
+                                                        <td className="pb-3 pt-3">{variant.name}</td>
+                                                    </tr>
+                                                ))}
                                         </div>
                                     </Link>
                                 </td>
-                                <td className="products-main-link"></td>
                                 <td className="products-main-link">{entry.sells}</td>
                                 <td className="products-main-link">{entry.price.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}</td>
                                 <td className="products-main-link">{
@@ -89,15 +90,17 @@ const ProductTable = ({ data }) => {
                                         <span className="fw-bold text-danger">HABIS</span>
                                     ) : entry.new_stock
                                 }</td>
-                                <td className="products-main-link d-flex flex-column flex-start">
+                                <td className="products-main-link d-flex flex-column" style={{
+                                    borderBottom: "0px",
+                                    height: "86.5px",
+                                }}>
                                     {checkCondition(entry.condition)}
                                     {informationCondition(entry.condition)}
                                 </td>
                             </tr>
                             {/* Row variant products */}
                             {entry.product.variant.map((variant, index) => (
-                                <tr key={`${entry.id_product}-variant-${index}`}>
-                                    <td>{variant.name}</td>
+                                <tr key={`${entry.id_product}-variant-${index}`} className="border border-0 border-white">
                                     <td>{variant.sell}</td>
                                     <td>{variant.price.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}</td>
                                     <td>{
@@ -105,7 +108,6 @@ const ProductTable = ({ data }) => {
                                             <span className="text-danger">Habis</span>
                                         ) : variant.new_stock
                                     }</td>
-                                    <td></td>
                                 </tr>
                             ))}
                         </React.Fragment>

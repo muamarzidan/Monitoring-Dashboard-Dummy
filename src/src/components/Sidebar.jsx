@@ -25,7 +25,7 @@ const Sidebar = () => {
                     <h5 className="text-center h2 mb-3">MENU</h5>
                 </Link>
                 <hr className="text-white" />
-                <ul className="nav flex-column h5">
+                <ul className="fw-light nav flex-column h5">
                     {/* Home Menu */}
                     <li className="nav-item py-2">
                         <Link
