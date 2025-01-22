@@ -39,6 +39,7 @@
 }
 
 .ads-product-table #product-table-head {
+  background-color: #cff4fc;
   height: 70px;
 }
 
@@ -48,22 +49,128 @@
 
 .table-wrapper {
   overflow-x: auto;
-  white-space: nowrap;
-}
-
-.table-wrapper::-webkit-scrollbar {
-  height: 8px;
-}
-
-.table-wrapper::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 4px;
-}
-
-.table-wrapper::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
+  white-space: wrap;
 }
 
 .data-product-table #main-products:hover {
   background-color: #FAFAFAFA
+}
+
+.marker {
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  background-color: green;
+}
+
+.animated-circle {
+  animation: spread-pulse 2s infinite;
+  transform-origin: center;
+}
+
+@keyframes spread-pulse {
+  0% {
+    r: 5;
+    opacity: 1;
+  }
+  50% {
+    r: 8;
+    opacity: 0.5;
+  }
+  100% {
+    r: 5;
+    opacity: 1;
+  }
+}
+
+.ads-detail-button-filter {
+  cursor: pointer;
+}
+
+.ads-detail-bg-button-filter-impression {
+  border-top: 3px solid #8884d8 !important;
+}
+
+.ads-detail-bg-button-filter-click {
+  border-top: 3px solid #000000FF !important;
+}
+
+.ads-detail-bg-button-filter-ctr {
+  border-top: 3px solid #ffc658 !important;
+}
+
+.ads-detail-bg-button-filter-broad_order_amount {
+  border-top: 3px solid #ff0000 !important;
+}
+
+.ads-detail-bg-button-filter-broad_gmv {
+  border-top: 3px solid #00ff00 !important;
+}
+
+.ads-detail-bg-button-filter-cost {
+  border-top: 3px solid #0000ff !important;
+}
+
+.ads-detail-bg-button-filter-broad_roi {
+  border-top: 3px solid #ff00ff !important;
+}
+
+.ads-detail-bg-button-filter-impression {
+  border-top: 3px solid #8884d8 !important;
+}
+
+.ads-bg-button-filter-impression {
+  background-color: #C61C1C;
+}
+
+.ads-bg-button-filter-click {
+  background-color: #EAE200;
+}
+
+.ads-bg-button-filter-ctr {
+  background-color: #00C000;
+}
+
+.ads-bg-button-filter-broad_order {
+  background-color: #368DFF;
+}
+
+.ads-bg-button-filter-broad_order_amount {
+  background-color: #11008E;
+}
+
+.ads-bg-button-filter-broad_gmv {
+  background-color: #BA01A1;
+}
+
+.ads-bg-button-filter-cost {
+  background-color: #2D2D2D;
+}
+
+.ads-bg-button-filter-broad_roi {
+  background-color: #DD9E00;
+}
+
+
+.filter-criteria input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  /* appearance: none; */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-criteria input[type="checkbox"]:checked {
+  background-color: #cff4fc;
+  border-color: blue;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70%;
+}
+
+.filter-criteria input[type="checkbox"]:hover {
+  border-color: #000272FF;
+  transform: scale(1.1);
 }

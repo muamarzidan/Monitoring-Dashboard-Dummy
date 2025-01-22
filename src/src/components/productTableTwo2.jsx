@@ -4,24 +4,24 @@ import useDebounce from "../hooks/useDebounce";
 
 const ProductTable = ({ data }) => {
     const [searchTerm, setSearchTerm] = useState("");
-    const [filteredData, setFilteredData] = useState(data.entry_list);
+    const [filteredData, setFilteredData] = useState(data.products);
     const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
     useEffect(() => {
-        if (debouncedSearchTerm === "") {
-            setFilteredData(data.entry_list);
+        if (debouncedSearchTerm === "") { 
+            setFilteredData(data.products);
         } else {
-            const filtered = data.entry_list.filter(
+            const filtered = data.products.filter(
                 (entry) =>
-                    entry.product.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-                    entry.product.sku.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+                    entry.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+                    entry.parent_sku.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
             );
             setFilteredData(filtered);
         }
-    }, [debouncedSearchTerm, data.entry_list]);
+    }, [debouncedSearchTerm, data.products]);
 
     const isRecommended = (variants, defaultStock) => {
-        const totalNewStock = variants.reduce((acc, variant) => acc + variant.new_stock, 0);
+        const totalNewStock = variants.reduce((acc, variant) => acc + variant.stock_detail.total_available_stock);
         return totalNewStock >= 0.75 * defaultStock;
     };
 
@@ -31,7 +31,7 @@ const ProductTable = ({ data }) => {
         } else {
             return <span className="text-body" style={{fontSize: "12px"}}>*Informasi kurang karena stok produk kurang dari 75% dan tidak layak di iklankan</span>;
         }
-    }
+    };
 
     return (
         <div className="data-product-table">
@@ -54,31 +54,31 @@ const ProductTable = ({ data }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredData.map((entry) => (
-                        <React.Fragment key={entry.id_product}>
+                    {filteredData?.map((entry) => (
+                        <React.Fragment key={entry.id}>
                             {/* Row main products */}
                             <tr className="border border-2">
-                                <td rowSpan={entry.product.variant.length + 1} className={`products-main-link ${isRecommended(entry.product.variant, entry.default_stock)
+                                <td rowSpan={entry.model_list.length + 1} className={`products-main-link ${isRecommended(entry.model_list, entry.stock_detail.total_available_stock)
                                     ? "bg-success bg-opacity-10"
                                     : ""
                                     }`} style={{
                                         borderBottom: "0px",
                                         height: "129px",
                                     }}>
-                                    <Link to={`/product/detail/${entry.id_product}`} className="text-decoration-none text-black fw-medium d-flex flex-column">
-                                        <img src="https://marketplace.canva.com/EAF5Wm8F050/1/0/1600w/canva-biru-modern-produk-skincare-kiriman-instagram-mPSe80ya_0A.jpg" alt={entry.product.name} className="rounded" style={{ width: "70px", height: "70px" }} />
+                                    <Link to={`/product/detail/${entry.id}`} className="text-decoration-none text-black fw-medium d-flex flex-column">
+                                        <img src={`https://down-id.img.susercontent.com/file/` + entry.cover_image} alt={entry.name} className="rounded" style={{ width: "70px", height: "70px" }} />
                                         <div className="d-flex flex-column">
-                                                <span>{entry.product.name}</span>
-                                                <small className="text-body-secondary border-bottom border-2 pb-1">SKU: {entry.product.sku}</small>
-                                                {entry.product.variant.map((variant, index) => (
-                                                    <tr key={`${entry.id_product}-variant-${index}`}>
-                                                        <td className="pb-3 pt-3">{variant.name}</td>
+                                                <span>{entry.name}</span>
+                                                <small className="text-body-secondary border-bottom border-2 pb-1">SKU: {entry.parent_sku}</small>
+                                                {entry.model_list.map((model, index) => (
+                                                    <tr key={`${entry.id}-model-${index}`}>
+                                                        <td className="pb-3 pt-3">{model.name}</td>
                                                     </tr>
                                                 ))}
                                         </div>
                                     </Link>
                                 </td>
-                                <td className={`products-main-link ${isRecommended(entry.product.variant, entry.default_stock)
+                                <td className={`products-main-link ${isRecommended(entry.model_list, entry.stock_detail.total_available_stock)
                                     ? "bg-success bg-opacity-10"
                                     : ""
                                     }`} style={{
@@ -89,25 +89,25 @@ const ProductTable = ({ data }) => {
                                         <span className="fw-bold text-danger">HABIS</span>
                                     ) : entry.new_stock
                                 }</td>
-                                <td className={`products-main-link d-flex flex-column ${isRecommended(entry.product.variant, entry.default_stock)
+                                <td className={`products-main-link d-flex flex-column ${isRecommended(entry.model_list, entry.stock_detail.total_available_stock)
                                     ? "bg-success bg-opacity-10"
                                     : ""
                                     }`} style={{
                                         borderBottom: "0px",
                                         height: "129px",
                                     }}>
-                                    {isRecommended(entry.product.variant, entry.default_stock) ? (
+                                    {isRecommended(entry.model_list, entry.stock_detail.total_available_stock) ? (
                                         <span className="fw-bold text-success">Disarankan</span>
                                     ) : (
                                         <span className="fw-bold text-danger">Tidak Disarankan</span>
                                     )}
-                                    {checkIsRecommended(entry.product.variant, entry.default_stock)}
+                                    {checkIsRecommended(entry.model_list, entry.stock_detail.total_available_stock)}
                                 </td>
                             </tr>
-                            {/* Row variant products */}
-                            {entry.product.variant.map((variant, index) => (
-                                <tr key={`${entry.id_product}-variant-${index}`} className="border border-0 border-white">
-                                    <td>{variant.sell}</td>
+                            {/* Row model products */}
+                            {entry.model_list.map((model, index) => (
+                                <tr key={`${entry.id}-model-${index}`} className="border border-0 border-white">
+                                    <td>{model.statistics.sold_count}</td>
                                     <td></td>
                                 </tr>
                             ))}

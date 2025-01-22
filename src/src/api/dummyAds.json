@@ -99,7 +99,9 @@
                 "title": "ODS Celana Pendek Short Pants Hitam Black [4]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-01",
+                "to": "2025-02-30"
             },
             {
                 "campaign": {
@@ -195,7 +197,9 @@
                 "title": "ODS Classic Oversized T-shirt Red [2]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-01",
+                "to": "2025-03-19"
             },
             {
                 "campaign": {
@@ -291,7 +295,9 @@
                 "title": "ODS Oversized T-shirt Dusty Pink [4]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-19",
+                "to": "2025-03-31"
             },
             {
                 "campaign": {
@@ -387,7 +393,9 @@
                 "title": "ODS Classic Oversized T-shirt Light Grey [2]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-11",
+                "to": "2025-03-11"
             },
             {
                 "campaign": {
@@ -480,7 +488,9 @@
                 "title": "Oversized T-shirt",
                 "trait_list": [],
                 "type": "shop_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-05",
+                "to": "2025-03-05"
             },
             {
                 "campaign": {
@@ -576,7 +586,9 @@
                 "title": "ODS Oversized Pocket T-shirt Olive (Pocket) [2]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-13",
+                "to": "2025-03-13"
             },
             {
                 "campaign": {
@@ -671,8 +683,10 @@
                 "subtype": null,
                 "title": "ODS Celana Pendek Short Pants Hitam Black [2]",
                 "trait_list": [],
-                "type": "product_manual",
-                "video_ads": null
+                "type": "product_automate",
+                "video_ads": null,
+                "from": "2024-12-31",
+                "to": "2025-03-31"
             },
             {
                 "campaign": {
@@ -768,7 +782,9 @@
                 "title": "ODS Oversized Stripe T-shirt Seafoam Green White [2]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-23",
+                "to": "2025-01-01"
             },
             {
                 "campaign": {
@@ -864,7 +880,9 @@
                 "title": "ODS Comfort Hoodie Dutch Blue [2]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-10",
+                "to": "2025-01-31"
             },
             {
                 "campaign": {
@@ -960,7 +978,9 @@
                 "title": "ODS Classic Oversized T-shirt Black [4]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-21",
+                "to": "2025-03-11"
             },
             {
                 "campaign": {
@@ -1056,7 +1076,9 @@
                 "title": "ODS Classic Oversized T-shirt Dark Brown [2]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-20",
+                "to": "2025-01-20"
             },
             {
                 "campaign": {
@@ -1152,7 +1174,9 @@
                 "title": "ODS Celana Pendek Short Pants Biru Navy [6]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-11",
+                "to": "2025-02-15"
             },
             {
                 "campaign": {
@@ -1248,7 +1272,9 @@
                 "title": "ODS Celana Pendek Short Pants Abu Misty Grey [4]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-01",
+                "to": "2025-03-01"
             },
             {
                 "campaign": {
@@ -1344,7 +1370,9 @@
                 "title": "ODS Oversized Pocket Washed T-shirt Black [5]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-02",
+                "to": "2025-03-21"
             },
             {
                 "campaign": {
@@ -1440,7 +1468,9 @@
                 "title": "ODS Oversized T-shirt Hijau Olive [4]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-01",
+                "to": "2025-03-31"
             },
             {
                 "campaign": {
@@ -1531,12 +1561,14 @@
                     "unique_click_user": 0
                 },
                 "search_brand_ads": null,
-                "state": "ongoing",
+                "state": "off",
                 "subtype": null,
                 "title": "ODS Comfort Short Pants Dutch Blue [2]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-01",
+                "to": "2025-01-15"
             },
             {
                 "campaign": {
@@ -1632,7 +1664,9 @@
                 "title": "ODS Oversized Heavyweight Cotton 16s T-shirt with Striped Collar - Dark Grey",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-01",
+                "to": "2025-01-15"
             },
             {
                 "campaign": {
@@ -1728,7 +1762,9 @@
                 "title": "ODS Oversized 1996 T-shirt White [2]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-01",
+                "to": "2024-12-31"
             },
             {
                 "campaign": {
@@ -1824,7 +1860,9 @@
                 "title": "ODS Classic Oversized T-shirt Red [4]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-01",
+                "to": "2025-02-28"
             },
             {
                 "campaign": {
@@ -1920,7 +1958,9 @@
                 "title": "ODS Oversized Stripe T-shirt Black White [3]",
                 "trait_list": [],
                 "type": "product_manual",
-                "video_ads": null
+                "video_ads": null,
+                "from": "2024-12-01",
+                "to": "2025-01-31"
             }
         ],
         "total": 460

@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import useDebounce from "../hooks/useDebounce"; 
 
 const ProductTable = ({ data }) => {
     const [searchTerm, setSearchTerm] = useState("");
-    const [filteredData, setFilteredData] = useState(data.entry_list);
+    const [filteredData, setFilteredData] = useState(data.products);
     const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
     useEffect(() => {
-        if (debouncedSearchTerm === "") {
-            setFilteredData(data.entry_list);
+        if (debouncedSearchTerm === "") { 
+            setFilteredData(data.products);
         } else {
-            const filtered = data.entry_list.filter(
+            const filtered = data.products.filter(
                 (entry) =>
-                    entry.product.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-                    entry.product.sku.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+                    entry.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+                    entry.parent_sku.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
             );
             setFilteredData(filtered);
         }
-    }, [debouncedSearchTerm, data.entry_list]);
+    }, [debouncedSearchTerm, data.products]);
 
     const checkCondition = (condition) => {
         if (condition === "Belum ada informasi") {
@@ -42,11 +41,11 @@ const ProductTable = ({ data }) => {
         } else {
             return <span className="text-body-tertiary fw-medium" style={{fontSize: "12px"}}>*produk layak dijual</span>;
         }
-    }
+    };
 
     return (
         <div className="data-product-table">
-            <h5 className="mb-3">{data.total} total produk</h5>
+            <h5 className="mb-3">{data.page_info.total} total produk</h5>
             <input
                 type="text"
                 className="form-control mb-3 py-3"
@@ -65,28 +64,28 @@ const ProductTable = ({ data }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredData.map((entry) => (
-                        <React.Fragment key={entry.id_product}>
+                    {filteredData?.map((entry) => (
+                        <React.Fragment key={entry.id}>
                             {/* Row main products */}
                             <tr className="border border-2">
-                                <td id="main-products" rowSpan={entry.product.variant.length + 1} className="products-main-link">
-                                    <Link to={`/product/detail/${entry.id_product}`} className="text-decoration-none text-black fw-medium d-flex flex-column">
-                                        <img src="https://marketplace.canva.com/EAF5Wm8F050/1/0/1600w/canva-biru-modern-produk-skincare-kiriman-instagram-mPSe80ya_0A.jpg" alt={entry.product.name} className="rounded" style={{ width: "70px", height: "70px" }} />
+                                <td id="main-products" rowSpan={entry.model_list.length + 1} className="products-main-link">
+                                    <div className="text-black fw-medium d-flex flex-column">
+                                        <img src={`https://down-id.img.susercontent.com/file/` + entry.cover_image} alt={entry.name} className="rounded" style={{ width: "70px", height: "70px" }} />
                                         <div className="d-flex flex-column">
-                                                <span>{entry.product.name}</span>
-                                                <small className="text-body-secondary border-bottom border-2 pb-1">SKU: {entry.product.sku}</small>
-                                                {entry.product.variant.map((variant, index) => (
-                                                    <tr key={`${entry.id_product}-variant-${index}`}>
-                                                        <td className="pb-3 pt-3">{variant.name}</td>
+                                                <span>{entry.name}</span>
+                                                <small className="text-body-secondary border-bottom border-2 pb-1">SKU: {entry.parent_sku}</small>
+                                                {entry.model_list.map((model, index) => (
+                                                    <tr key={`${entry.id}-model-${index}`}>
+                                                        <td className="pb-3 pt-3">{model.name}</td>
                                                     </tr>
                                                 ))}
                                         </div>
-                                    </Link>
+                                    </div>
                                 </td>
-                                <td className="products-main-link">{entry.sells}</td>
-                                <td className="products-main-link">{entry.price.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}</td>
+                                <td className="products-main-link">{entry.stock_detail.total_available_stock}</td>
+                                <td className="products-main-link">{entry.price_detail.selling_price_min.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}</td>
                                 <td className="products-main-link">{
-                                    entry.new_stock === 0 ? (
+                                    entry.stock_detail.total_available_stock === 0 ? (
                                         <span className="fw-bold text-danger">HABIS</span>
                                     ) : entry.new_stock
                                 }</td>
@@ -94,19 +93,19 @@ const ProductTable = ({ data }) => {
                                     borderBottom: "0px",
                                     height: "86.5px",
                                 }}>
-                                    {checkCondition(entry.condition)}
-                                    {informationCondition(entry.condition)}
+                                    {checkCondition("Baik")}
+                                    {informationCondition("Baik")}
                                 </td>
                             </tr>
-                            {/* Row variant products */}
-                            {entry.product.variant.map((variant, index) => (
-                                <tr key={`${entry.id_product}-variant-${index}`} className="border border-0 border-white">
-                                    <td>{variant.sell}</td>
-                                    <td>{variant.price.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}</td>
+                            {/* Row model products */}
+                            {entry.model_list.map((model, index) => (
+                                <tr key={index} className="border border-0 border-white">
+                                    <td>{model.statistics.sold_count}</td>
+                                    <td>{model.price_detail.origin_price.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}</td>
                                     <td>{
-                                        variant.new_stock === 0 ? (
+                                        model.stock_detail.total_available_stock === 0 ? (
                                             <span className="text-danger">Habis</span>
-                                        ) : variant.new_stock
+                                        ) : model.stock_detail.total_available_stock
                                     }</td>
                                 </tr>
                             ))}
