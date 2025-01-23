@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import DashboardLayout from '../../components/DashboardLayout';
-import jsonData from '../../api/dummyAds.json';
+import jsonData from '../../api/testttt.json';
 import {
     LineChart,
     Line,

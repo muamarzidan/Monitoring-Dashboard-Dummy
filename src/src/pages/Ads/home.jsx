@@ -3,7 +3,7 @@ import DashboardLayout from '../../components/DashboardLayout';
 // import AdsTable from '../../pages/test2';
 import AdsTable from '../../components/adsTable';
 // import jsonData from '../../api/test.json';
-import jsonData from '../../api/dummyAds.json';
+import jsonData from '../../api/testttt.json';
 
 export default function AdsPage() {
     return (

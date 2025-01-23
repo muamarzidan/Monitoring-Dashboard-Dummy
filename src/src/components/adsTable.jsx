@@ -10,11 +10,13 @@ import FilterCriteria from "./selectMultipleType";
 import cutRoas from "../utils/cutRoas";
 import convertPercentage from "../utils/convertPercentage";
 import calculateClickConvertionPercentage from "../utils/calculateClickConvertPercentage";
+import time from "../api/time.json"
 
 
 dayjs.extend(isBetween);
 const bidding = 0.13;
 const AdsTable = ({ data }) => {
+    const [adsData, setAdsData] = useState([]);
     const today = dayjs().format("YYYY-MM-DD");
     const [startDate, setStartDate] = useState(today);
     const [endDate, setEndDate] = useState(today);
@@ -45,7 +47,20 @@ const AdsTable = ({ data }) => {
         tingkatKonversiLangsung: true,
         biayaPerkonversiLangsung: true,
     });
-    
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("http://localhost:1337/api/v1/shopee-seller/product-ads");
+                const result = await response.json();
+                setAdsData(result.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
+    }, []);
+
     const convertEpochToDate = (epoch) => dayjs(epoch * 1000);
 
     const filteredByDate = useMemo(() => {
@@ -54,7 +69,7 @@ const AdsTable = ({ data }) => {
             return entryDate.isBetween(startDate, endDate, "day", "[]");
         });
     }, [startDate, endDate, data.entry_list]);
-    
+
     const handleDateChange = (type, value) => {
         if (type === "start") {
             if (dayjs(value).isAfter(endDate)) {
@@ -71,8 +86,17 @@ const AdsTable = ({ data }) => {
         }
     };
 
+    const convertEpochToDatet = (epoch) => {
+        const date = new Date(epoch * 1000);
+        return date.toLocaleDateString("id-ID", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+        });
+    };
+
     const chartData = {
-        labels: filteredByDate.map((entry) => entry.from),
+        labels: convertEpochToDatet(time.startDefault),
         datasets: [
             activeMetrics.includes("impression") && {
                 label: "Iklan Dilihat",
@@ -362,7 +386,7 @@ const AdsTable = ({ data }) => {
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
                         {convertPercentage(entry.ratio.broad_cir)}%
                     </span>
-                    <span className="text-danger">{entry.report.broad_cir > bidding ? "Tambahkan bidding perklik" : "" }</span>
+                    <span className="text-danger">{entry.report.broad_cir > bidding ? "Tambahkan bidding perklik" : ""}</span>
                 </div>
             ),
         },
