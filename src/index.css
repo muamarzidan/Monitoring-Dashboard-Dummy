@@ -20,10 +20,6 @@
   background-color: #cff4fc;
 }
 
-.products-main-link {
-  cursor: pointer !important;
-}
-
 .data-product-table th {
   background-color: #cff4fc;
   display: table-cell;

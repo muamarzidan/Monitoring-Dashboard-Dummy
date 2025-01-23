@@ -37,7 +37,7 @@ const ProductTable = ({ data }) => {
         } else if (condition === "Buruk") {
             return <span className="text-body-tertiary fw-medium" style={{fontSize: "12px"}}>*produk tidak layak dijual</span>;
         } else if (condition === "Baik") {
-            return <span className="text-body-tertiary fw-medium" style={{fontSize: "12px"}}>*2 produk tidak ada detail inforomasi</span>;
+            return <span className="text-body-tertiary fw-medium" style={{fontSize: "12px"}}>*2 produk tidak ada detail informasi</span>;
         } else {
             return <span className="text-body-tertiary fw-medium" style={{fontSize: "12px"}}>*produk layak dijual</span>;
         }
@@ -72,13 +72,13 @@ const ProductTable = ({ data }) => {
                                     <div className="text-black fw-medium d-flex flex-column">
                                         <img src={`https://down-id.img.susercontent.com/file/` + entry.cover_image} alt={entry.name} className="rounded" style={{ width: "70px", height: "70px" }} />
                                         <div className="d-flex flex-column">
-                                                <span>{entry.name}</span>
-                                                <small className="text-body-secondary border-bottom border-2 pb-1">SKU: {entry.parent_sku}</small>
-                                                {entry.model_list.map((model, index) => (
-                                                    <tr key={`${entry.id}-model-${index}`}>
-                                                        <td className="pb-3 pt-3">{model.name}</td>
-                                                    </tr>
-                                                ))}
+                                            <span>{entry.name}</span>
+                                            <small className="text-body-secondary border-bottom border-2 pb-1">SKU: {entry.parent_sku}</small>
+                                            {entry.model_list.map((model, index) => (
+                                                <tr key={`${entry.id}-model-${index}`}>
+                                                    <td className="pb-3 pt-3">{model.name}</td>
+                                                </tr>
+                                            ))}
                                         </div>
                                     </div>
                                 </td>
@@ -89,9 +89,9 @@ const ProductTable = ({ data }) => {
                                         <span className="fw-bold text-danger">HABIS</span>
                                     ) : entry.new_stock
                                 }</td>
-                                <td className="products-main-link d-flex flex-column" style={{
+                                <td colSpan={5} className="products-main-link d-flex flex-column" style={{
                                     borderBottom: "0px",
-                                    height: "86.5px",
+                                    height: "90.5px",
                                 }}>
                                     {checkCondition("Baik")}
                                     {informationCondition("Baik")}

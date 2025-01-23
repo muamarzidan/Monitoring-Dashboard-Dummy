@@ -1,7 +1,8 @@
 import React from 'react'
 import DashboardLayout from '../../components/DashboardLayout';
-// import AdsTable from '../../pages/test';
+// import AdsTable from '../../pages/test2';
 import AdsTable from '../../components/adsTable';
+// import jsonData from '../../api/test.json';
 import jsonData from '../../api/dummyAds.json';
 
 export default function AdsPage() {

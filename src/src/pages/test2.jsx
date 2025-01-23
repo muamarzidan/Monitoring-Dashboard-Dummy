@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import isBetween from 'dayjs/plugin/isBetween';
 
 import useDebounce from "../hooks/useDebounce";
-import FilterCriteria from "./selectMultipleType";
+import FilterCriteria from "../components/selectMultipleType";
 import cutRoas from "../utils/cutRoas";
 import convertPercentage from "../utils/convertPercentage";
 import calculateClickConvertionPercentage from "../utils/calculateClickConvertPercentage";
@@ -15,6 +15,7 @@ import calculateClickConvertionPercentage from "../utils/calculateClickConvertPe
 dayjs.extend(isBetween);
 const bidding = 0.13;
 const AdsTable = ({ data }) => {
+    console.log(data);
     const today = dayjs().format("YYYY-MM-DD");
     const [startDate, setStartDate] = useState(today);
     const [endDate, setEndDate] = useState(today);
@@ -45,16 +46,16 @@ const AdsTable = ({ data }) => {
         tingkatKonversiLangsung: true,
         biayaPerkonversiLangsung: true,
     });
-    
+
     const convertEpochToDate = (epoch) => dayjs(epoch * 1000);
 
     const filteredByDate = useMemo(() => {
-        return data.entry_list.filter((entry) => {
-            const entryDate = convertEpochToDate(entry.campaign.start_time);
+        return data.filter((entry) => {
+            const entryDate = convertEpochToDate(entry.start_time);
             return entryDate.isBetween(startDate, endDate, "day", "[]");
         });
     }, [startDate, endDate, data.entry_list]);
-    
+
     const handleDateChange = (type, value) => {
         if (type === "start") {
             if (dayjs(value).isAfter(endDate)) {
@@ -71,12 +72,21 @@ const AdsTable = ({ data }) => {
         }
     };
 
+    const convertEpochToDatet = (epoch) => {
+        const date = new Date(epoch * 1000);
+        return date.toLocaleDateString("id-ID", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+        });
+    };
+
     const chartData = {
-        labels: filteredByDate.map((entry) => entry.from),
+        labels: filteredByDate.map((entry) => convertEpochToDatet(entry.start_time)),
         datasets: [
             activeMetrics.includes("impression") && {
                 label: "Iklan Dilihat",
-                data: filteredByDate.map((entry) => entry.report.impression),
+                data: filteredByDate.map((entry) => entry.impression),
                 borderColor: "#C61C1C",
                 fill: false,
                 borderWidth: 2,
@@ -84,7 +94,7 @@ const AdsTable = ({ data }) => {
             },
             activeMetrics.includes("click") && {
                 label: "Jumlah Klik",
-                data: filteredByDate.map((entry) => entry.report.click),
+                data: filteredByDate.map((entry) => entry.click),
                 borderColor: "#EAE200",
                 fill: false,
                 borderWidth: 2,
@@ -92,7 +102,7 @@ const AdsTable = ({ data }) => {
             },
             activeMetrics.includes("ctr") && {
                 label: "Presentase Klik",
-                data: filteredByDate.map((entry) => entry.report.ctr * 100),
+                data: filteredByDate.map((entry) => entry.ctr * 100),
                 borderColor: "#00C000",
                 fill: false,
                 borderWidth: 2,
@@ -100,7 +110,7 @@ const AdsTable = ({ data }) => {
             },
             activeMetrics.includes("broad_order") && {
                 label: "Pesanan",
-                data: filteredByDate.map((entry) => entry.report.broad_order),
+                data: filteredByDate.map((entry) => entry.broad_order),
                 borderColor: "#368DFF",
                 fill: false,
                 borderWidth: 2,
@@ -108,7 +118,7 @@ const AdsTable = ({ data }) => {
             },
             activeMetrics.includes("broad_order_amount") && {
                 label: "Produk Terjual",
-                data: filteredByDate.map((entry) => entry.report.broad_order_amount),
+                data: filteredByDate.map((entry) => entry.broad_order_amount),
                 borderColor: "#11008E",
                 fill: false,
                 borderWidth: 2,
@@ -116,7 +126,7 @@ const AdsTable = ({ data }) => {
             },
             activeMetrics.includes("broad_gmv") && {
                 label: "Penjualan dari Iklan",
-                data: filteredByDate.map((entry) => entry.report.broad_gmv),
+                data: filteredByDate.map((entry) => entry.broad_gmv),
                 borderColor: "#BA01A1FF",
                 fill: false,
                 borderWidth: 2,
@@ -124,7 +134,7 @@ const AdsTable = ({ data }) => {
             },
             activeMetrics.includes("cost") && {
                 label: "Biaya Iklan",
-                data: filteredByDate.map((entry) => entry.report.cost),
+                data: filteredByDate.map((entry) => entry.cost),
                 borderColor: "#2D2D2D",
                 fill: false,
                 borderWidth: 2,
@@ -132,7 +142,7 @@ const AdsTable = ({ data }) => {
             },
             activeMetrics.includes("broad_roi") && {
                 label: "ROAS",
-                data: filteredByDate.map((entry) => entry.report.broad_roi),
+                data: filteredByDate.map((entry) => entry.broad_roi),
                 borderColor: "#DD9E00",
                 fill: false,
                 borderWidth: 2,
@@ -164,9 +174,7 @@ const AdsTable = ({ data }) => {
 
     const toggleMetric = (metric) => {
         setActiveMetrics((prev) =>
-            prev.includes(metric)
-                ? prev.filter((m) => m !== metric)
-                : [...prev, metric]
+            prev.includes(metric) ? prev.filter((m) => m !== metric) : [...prev, metric]
         );
     };
 
@@ -183,7 +191,7 @@ const AdsTable = ({ data }) => {
 
     const sumReportValue = (key) => {
         return filteredByDate.reduce((total, entry) => {
-            return total + (entry?.report?.[key] || 0);
+            return total + (entry?.[key] || 0);
         }, 0);
     };
     //inherit
@@ -199,26 +207,26 @@ const AdsTable = ({ data }) => {
     const columnsConfig = {
         biayaIklan: {
             label: "Biaya Iklan",
-            key: ["report.cost", "ratio.cost"],
+            key: ["cost", "cost"],
             width: 200,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>Rp.{entry.report.cost.toLocaleString('id-ID')}</span>
+                    <span>Rp.{entry.cost.toLocaleString('id-ID')}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.cost)}%
+                        {convertPercentage(entry.cost)}%
                     </span>
                 </div>
             ),
         },
         avgRank: {
             label: "Rata-rata Peringkat",
-            key: ["report.avg_rank", "ratio.avg_rank"],
+            key: ["avg_rank", "avg_rank"],
             width: 200,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>{entry.report.avg_rank}</span>
+                    <span>{entry.avg_rank}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
                         -
                     </span>
@@ -227,183 +235,183 @@ const AdsTable = ({ data }) => {
         },
         penjualanDariIklan: {
             label: "Penjualan dari Iklan",
-            key: ["report.broad_gmv", "ratio.broad_gmv"],
+            key: ["broad_gmv", "broad_gmv"],
             width: 200,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>Rp.{entry.report.broad_gmv.toLocaleString('id-ID')}</span>
+                    <span>Rp.{entry.broad_gmv.toLocaleString('id-ID')}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.broad_gmv)}%
+                        {convertPercentage(entry.broad_gmv)}%
                     </span>
                 </div>
             ),
         },
         roas: {
             label: "ROAS",
-            key: ["report.broad_roi", "ratio.broad_roi"],
+            key: ["broad_roi", "broad_roi"],
             width: 200,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>{cutRoas(entry.report.broad_roi)}</span>
+                    <span>{cutRoas(entry.broad_roi)}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.broad_roi)}%
+                        {convertPercentage(entry.broad_roi)}%
                     </span>
                 </div>
             ),
         },
         iklanDilihat: {
             label: "Iklan Dilihat",
-            key: ["report.impression", "ratio.impression"],
+            key: ["impression", "impression"],
             width: 200,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>{entry.report.impression.toLocaleString('id-ID')}</span>
+                    <span>{entry.impression.toLocaleString('id-ID')}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.impression)}%
+                        {convertPercentage(entry.impression)}%
                     </span>
                 </div>
             ),
         },
         jumlahKlik: {
             label: "Jumlah Klik",
-            key: ["report.click", "ratio.click"],
+            key: ["click", "click"],
             width: 200,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>Rp.{entry.report.click.toLocaleString('id-ID')}</span>
+                    <span>Rp.{entry.click.toLocaleString('id-ID')}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.click)}%
+                        {convertPercentage(entry.click)}%
                     </span>
                 </div>
             ),
         },
         presentaseKlik: {
             label: "Presentase Klik",
-            key: ["report.ctr", "ratio.ctr"],
+            key: ["ctr", "ctr"],
             width: 200,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>{calculateClickConvertionPercentage(entry.ratio.ctr)}</span>
+                    <span>{calculateClickConvertionPercentage(entry.ctr)}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.ctr)}%
+                        {convertPercentage(entry.ctr)}%
                     </span>
                 </div>
             ),
         },
         konversi: {
             label: "Konversi",
-            key: ["report.checkout", "ratio.checkout"],
+            key: ["checkout", "checkout"],
             width: 200,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>{entry.report.checkout.toLocaleString('id-ID')}</span>
+                    <span>{entry.checkout.toLocaleString('id-ID')}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.checkout)}%
+                        {convertPercentage(entry.checkout)}%
                     </span>
                 </div>
             ),
         },
         tingkatKonversi: {
             label: "Tingkat Konversi",
-            key: ["report.cr", "ratio.cr"],
+            key: ["cr", "cr"],
             width: 250,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>{calculateClickConvertionPercentage(entry.report.cr)}</span>
+                    <span>{calculateClickConvertionPercentage(entry.cr)}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.cr)}%
+                        {convertPercentage(entry.cr)}%
                     </span>
                 </div>
             ),
         },
         produkTerjual: {
             label: "Produk Terjual",
-            key: ["report.direct_order", "ratio.direct_order"],
+            key: ["direct_order", "direct_order"],
             width: 200,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>{entry.report.direct_order.toLocaleString('id-ID')}</span>
+                    <span>{entry.direct_order.toLocaleString('id-ID')}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.direct_order)}%
+                        {convertPercentage(entry.direct_order)}%
                     </span>
                 </div>
             ),
         },
         biayaPerKonversi: {
             label: "Biaya per Konversi",
-            key: ["report.cpc", "ratio.cpc"],
+            key: ["cpc", "cpc"],
             width: 200,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>Rp.{entry.report.cpc.toLocaleString('id-ID')}</span>
+                    <span>Rp.{entry.cpc.toLocaleString('id-ID')}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.cpc)}%
+                        {convertPercentage(entry.cpc)}%
                     </span>
                 </div>
             ),
         },
         presentaseBiayaIklanAcos: {
             label: "Presentase Biaya Iklan (ACOS)",
-            key: ["report.broad_cir", "ratio.broad_cir"],
+            key: ["broad_cir", "broad_cir"],
             width: 300,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>{calculateClickConvertionPercentage(entry.report.broad_cir)}</span>
+                    <span>{calculateClickConvertionPercentage(entry.broad_cir)}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.broad_cir)}%
+                        {convertPercentage(entry.broad_cir)}%
                     </span>
-                    <span className="text-danger">{entry.report.broad_cir > bidding ? "Tambahkan bidding perklik" : "" }</span>
+                    <span className="text-danger">{entry.broad_cir > bidding ? "Tambahkan bidding perklik" : ""}</span>
                 </div>
             ),
         },
         konversiLangsung: {
             label: "Konversi Langsung",
-            key: ["report.direct_cr", "ratio.direct_cr"],
+            key: ["direct_cr", "direct_cr"],
             width: 200,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>{entry.report.direct_cr.toLocaleString('id-ID')}</span>
+                    <span>{entry.direct_cr.toLocaleString('id-ID')}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.direct_cr)}%
+                        {convertPercentage(entry.direct_cr)}%
                     </span>
                 </div>
             ),
         },
         produkTerjualLangsung: {
             label: "Produk Terjual Langsung",
-            key: ["report.direct_order", "ratio.direct_order"],
+            key: ["direct_order", "direct_order"],
             width: 300,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>{entry.report.direct_order.toLocaleString('id-ID')}</span>
+                    <span>{entry.direct_order.toLocaleString('id-ID')}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.direct_order)}%
+                        {convertPercentage(entry.direct_order)}%
                     </span>
                 </div>
             ),
         },
         penjualanIklanLangsung: {
             label: "Penjualan dari Iklan Langsung",
-            key: ["report.direct_gmv", "ratio.direct_gmv"],
+            key: ["direct_gmv", "direct_gmv"],
             width: 300,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>Rp.{entry.report.direct_gmv.toLocaleString('id-ID')}</span>
+                    <span>Rp.{entry.direct_gmv.toLocaleString('id-ID')}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.direct_gmv)}%
+                        {convertPercentage(entry.direct_gmv)}%
                     </span>
                 </div>
             ),
@@ -411,14 +419,14 @@ const AdsTable = ({ data }) => {
         // TEST
         roasLangsung: {
             label: "ROAS Langsung",
-            key: ["report.direct_roi", "ratio.direct_roi"],
+            key: ["direct_roi", "direct_roi"],
             width: 200,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>{cutRoas(entry.report.direct_roi)}</span>
+                    <span>{cutRoas(entry.direct_roi)}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.direct_roi)}%
+                        {convertPercentage(entry.direct_roi)}%
                     </span>
                 </div>
             ),
@@ -426,28 +434,28 @@ const AdsTable = ({ data }) => {
         // TEST
         acosLangsung: {
             label: "ACOS Langsung",
-            key: ["report.direct_roi", "ratio.direct_roi"],
+            key: ["direct_roi", "direct_roi"],
             width: 200,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>{calculateClickConvertionPercentage(entry.report.direct_roi)}</span>
+                    <span>{calculateClickConvertionPercentage(entry.direct_roi)}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.direct_roi)}%
+                        {convertPercentage(entry.direct_roi)}%
                     </span>
                 </div>
             ),
         },
         tingkatKonversiLangsung: {
             label: "Tingkat Konversi Langsung",
-            key: ["report.direct_cr", "ratio.direct_cr"],
+            key: ["direct_cr", "direct_cr"],
             width: 300,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>{calculateClickConvertionPercentage(entry.ratio.direct_cr)}</span>
+                    <span>{calculateClickConvertionPercentage(entry.direct_cr)}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.direct_cr)}%
+                        {convertPercentage(entry.direct_cr)}%
                     </span>
                 </div>
             ),
@@ -455,14 +463,14 @@ const AdsTable = ({ data }) => {
         // TEST
         biayaPerkonversiLangsung: {
             label: "Biaya per Konversi Langsung",
-            key: ["report.direct_roi", "ratio.direct_roi"],
+            key: ["direct_roi", "direct_roi"],
             width: 300,
             isCustom: true,
             render: (entry) => (
                 <div className="d-flex flex-column">
-                    <span>Rp.{entry.report.direct_roi.toLocaleString('id-ID')}</span>
+                    <span>Rp.{entry.direct_roi.toLocaleString('id-ID')}</span>
                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
-                        {convertPercentage(entry.ratio.direct_roi)}%
+                        {convertPercentage(entry.direct_roi)}%
                     </span>
                 </div>
             ),
@@ -739,7 +747,7 @@ const AdsTable = ({ data }) => {
                                             </div>
                                             {/* Nama Produk */}
                                             <Link
-                                                to={`/product-ads-all/detail/${entry.campaign.campaign_id}`}
+                                                to={`/product-ads-all/detail/${entry.id}`}
                                                 className="p-2 d-flex gap-2 text-decoration-none text-dark"
                                                 style={{ width: "600px", minWidth: "600px" }}
                                             >
@@ -778,7 +786,7 @@ const AdsTable = ({ data }) => {
                                             >
                                                 <div className="d-flex flex-column">
                                                     <span>
-                                                        <span>Rp.{entry.campaign.daily_budget.toLocaleString('id-ID')}</span>
+                                                        <span>Rp.{entry.daily_budget.toLocaleString('id-ID')}</span>
                                                     </span>
                                                     <span style={{ fontSize: "14px", color: "#0D26C6FF" }}>
                                                         per hari

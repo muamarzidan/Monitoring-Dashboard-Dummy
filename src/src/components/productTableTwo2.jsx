@@ -22,14 +22,14 @@ const ProductTable = ({ data }) => {
 
     const isRecommended = (variants, defaultStock) => {
         const totalNewStock = variants.reduce((acc, variant) => acc + variant.stock_detail.total_available_stock);
-        return totalNewStock >= 0.75 * defaultStock;
+        return totalNewStock >= 0.70 * defaultStock;
     };
 
     const checkIsRecommended = (variants, defaultStock) => {
         if (isRecommended(variants, defaultStock)) {
-            return <span className="text-body" style={{fontSize: "12px"}}>*Informasi dan stok produk lebih dari minimal 75% dan layak di iklankan</span>;
+            return <span className="text-body" style={{fontSize: "12px"}}>*Informasi dan stok produk lebih dari minimal 70% dan layak di iklankan</span>;
         } else {
-            return <span className="text-body" style={{fontSize: "12px"}}>*Informasi kurang karena stok produk kurang dari 75% dan tidak layak di iklankan</span>;
+            return <span className="text-body" style={{fontSize: "12px"}}>*Informasi kurang karena stok produk kurang dari 70% dan tidak layak di iklankan</span>;
         }
     };
 
@@ -65,7 +65,7 @@ const ProductTable = ({ data }) => {
                                         borderBottom: "0px",
                                         height: "129px",
                                     }}>
-                                    <Link to={`/product/detail/${entry.id}`} className="text-decoration-none text-black fw-medium d-flex flex-column">
+                                    <div className="text-decoration-none text-black fw-medium d-flex flex-column">
                                         <img src={`https://down-id.img.susercontent.com/file/` + entry.cover_image} alt={entry.name} className="rounded" style={{ width: "70px", height: "70px" }} />
                                         <div className="d-flex flex-column">
                                                 <span>{entry.name}</span>
@@ -76,7 +76,7 @@ const ProductTable = ({ data }) => {
                                                     </tr>
                                                 ))}
                                         </div>
-                                    </Link>
+                                    </div>
                                 </td>
                                 <td className={`products-main-link ${isRecommended(entry.model_list, entry.stock_detail.total_available_stock)
                                     ? "bg-success bg-opacity-10"
