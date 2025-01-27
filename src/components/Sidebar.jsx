@@ -109,6 +109,18 @@ const Sidebar = () => {
               </ul>
             )}
           </li>
+          <li className="nav-item py-2">
+            <Link
+              to="/merchant"
+              className={`nav-link ${
+                pathLocation.pathname === "/merchant"
+                  ? " bg-info-subtle text-black"
+                  : "text-white"
+              } hover-effect`}
+            >
+              Merchant
+            </Link>
+          </li>
         </ul>
       </div>
       <div className="p-3">
