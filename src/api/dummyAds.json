@@ -24,7 +24,8 @@
           "manual_product_ads": {
             "bidding_strategy": "manual",
             "item_id": 24785707560,
-            "product_placement": "targeting",
+            "product_placement": ["targeting", "search_product"],
+            "bidding_price": 30000,
             "simple_roi_one_no_edit_timestamp": 0,
             "target_audience": null
           },
@@ -80,7 +81,7 @@
             "direct_order": 1,
             "direct_order_amount": 1,
             "direct_roi": 7.173387592837085,
-            "impression": 3297,
+            "impression": 29,
             "avg_rank": 27,
             "product_click": 0,
             "product_impression": 0,
@@ -116,7 +117,8 @@
           "manual_product_ads": {
             "bidding_strategy": "manual",
             "item_id": 27460562891,
-            "product_placement": "targeting",
+            "product_placement": ["targeting"],
+            "bidding_price": 30000,
             "simple_roi_one_no_edit_timestamp": 0,
             "target_audience": null
           },
@@ -172,7 +174,7 @@
             "direct_order": 1,
             "direct_order_amount": 1,
             "direct_roi": 9.498205868386245,
-            "impression": 1964,
+            "impression": 29,
             "avg_rank": 24,
             "product_click": 0,
             "product_impression": 0,
@@ -208,7 +210,8 @@
           "manual_product_ads": {
             "bidding_strategy": "manual",
             "item_id": 24785707560,
-            "product_placement": "search_product",
+            "product_placement": ["search_product"],
+            "bidding_price": 30000,
             "simple_roi_one_no_edit_timestamp": 0,
             "target_audience": null
           },
@@ -300,7 +303,8 @@
           "manual_product_ads": {
             "bidding_strategy": "manual",
             "item_id": 27460562891,
-            "product_placement": "search_product",
+            "bidding_price": 30000,
+            "product_placement": ["search_product", "targeting"],
             "simple_roi_one_no_edit_timestamp": 0,
             "target_audience": null
           },

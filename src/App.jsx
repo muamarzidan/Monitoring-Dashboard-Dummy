@@ -5,6 +5,7 @@ import "../src/App.css";
 import LoginPage from './pages/Auth/login';
 import HomePage from './pages/Home';
 import AdsPage from './pages/Ads/home';
+// import AdsDetailPage from './components/testan';
 import AdsDetailPage from './pages/Ads/ads-detail';
 import ProductPage from './pages/Product/product';
 import ProductRecomendationPage from './pages/Product/product-recomendation';

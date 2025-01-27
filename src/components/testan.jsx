@@ -1,318 +1,323 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { Link } from "react-router-dom";
-import Select from "react-select";
-import { Line } from "react-chartjs-2";
-import dayjs from "dayjs";
-import isBetween from "dayjs/plugin/isBetween";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import DashboardLayout from '../components/DashboardLayout';
+import jsonData from '../api/dummyAds.json';
+import {
+    LineChart,
+    Line,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    Legend,
+    ResponsiveContainer,
+} from "recharts";
 
-import useDebounce from "../hooks/useDebounce";
-import FilterCriteria from "./selectMultipleType";
-import cutRoas from "../utils/cutRoas";
-import convertPercentage from "../utils/convertPercentage";
-import calculateClickConvertionPercentage from "../utils/calculateClickConvertPercentage";
-import convertEpochToDate from "../utils/convertEpochDate";
-import { DEFAULT_BIDDING } from "../constant/const";
+export default function AdsDetail() {
+    const { id } = useParams();
+    const [adsProductDetail, setadsProductDetail] = useState(null);
+    const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
+    const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0]);
+    const [selectedMetrics, setSelectedMetrics] = useState([]);
+    const [chartData, setChartData] = useState([]);
 
-dayjs.extend(isBetween);
-const AdsTable = ({ data }) => {
-    const [startDate, setStartDate] = useState("2024-09-01");
-    const [endDate, setEndDate] = useState("2024-09-30");
-    const [selectedOptions, setSelectedOptions] = useState([]);
-    const [activeFilter, setActiveFilter] = useState("all");
-    const [searchTerm, setSearchTerm] = useState("");
-    const [filteredData, setFilteredData] = useState([]);
-    const debouncedSearchTerm = useDebounce(searchTerm, 300);
-    const [selectedTypes, setSelectedTypes] = useState([]);
-    const [activeMetrics, setActiveMetrics] = useState([]);
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const toggleDropdown = () => setDropdownOpen((prev) => !prev);
-
-    const filteredByDate = useMemo(() => {
-        return data.entry_list.filter((entry) => {
-            const entryDate = new Date(entry.campaign.start_time * 1000);
-            return (
-                entryDate >= new Date(startDate) && entryDate <= new Date(endDate)
-            );
-        });
-    }, [startDate, endDate, data.entry_list]);
-
-    const handleDateChange = (type, value) => {
-        if (type === "start") {
-            if (dayjs(value).isAfter(endDate)) {
-                alert("Tanggal awal tidak boleh lebih dari tanggal akhir.");
-                return;
-            }
-            setStartDate(value);
-        } else {
-            if (dayjs(value).isBefore(startDate)) {
-                alert("Tanggal akhir tidak boleh kurang dari tanggal awal.");
-                return;
-            }
-            setEndDate(value);
+    function potongAngka(angka) {
+        const panjangAngka = String(angka).length;
+        let indexPotong;
+        if (panjangAngka === 11) {
+            indexPotong = 8;
+        } else if (panjangAngka === 12) {
+            indexPotong = 9;
+        } else if (panjangAngka === 10) {
+            indexPotong = 7;
         }
-    };
 
-    const handleOptionToggle = (option) => {
-        if (selectedOptions.some((selected) => selected.value === option.value)) {
-            setSelectedOptions((prev) => prev.filter((opt) => opt.value !== option.value));
-        } else {
-            setSelectedOptions((prev) => [...prev, option]);
-        }
-    };
-
-    // const handleOptionToggle = (option) => {
-    //     setSelectedOptions((prev) =>
-    //         prev.some((selected) => selected.value === option.value)
-    //             ? prev.filter((selected) => selected.value !== option.value)
-    //             : [...prev, option]
-    //     );
-    // };
-
-    const chartData = useMemo(() => {
-        const labels = Array.from({ length: 30 }, (_, i) => `2024-09-${i + 1}`);
-        // Pemetaan warna berdasarkan metrik
-        const metricColors = {
-            impression: "#C61C1C", // Warna dari ads-bg-button-filter-impression
-            click: "#EAE200", // Warna dari ads-bg-button-filter-click
-            // Tambahkan warna lain untuk metrik tambahan
-        };
-
-        const datasets = filteredByDate.map((entry, index) => {
-            if (!selectedOptions.some((option) => option.value === index)) return null;
-
-            let metric = null;
-
-            // Tentukan metrik berdasarkan tombol aktif
-            const activeMetric = activeMetrics[0]; // Ambil metrik pertama yang aktif
-            switch (activeMetric) {
-                case "impression":
-                    metric = entry.report.impression;
-                    break;
-                case "click":
-                    metric = entry.report.click;
-                    break;
-                // dan data linnya
-                default:
-                    break;
-            }
-
-            const data = Array(30).fill(0);
-            const startIndex = new Date(entry.campaign.start_time * 1000).getDate() - 1;
-            data[startIndex] = metric;
-
-            return {
-                label: entry.title,
-                data,
-                borderColor: metricColors[activeMetric] || "#000000", // Gunakan warna dari pemetaan
-                fill: false,
-                borderWidth: 2,
-                tension: 0.4,
-            };
-        });
-
-        return { labels, datasets: datasets.filter(Boolean) };
-    }, [filteredByDate, selectedOptions, activeMetrics]);
-    // inherit
-    const options = useMemo(() => {
-        return filteredByDate.map((entry, index) => ({
-            value: index,
-            label: entry.title,
-        }));
-    }, [filteredByDate]);
-
-    const filteredOptions = useMemo(() => {
-        return options.filter((option) =>
-            option.label.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-    }, [options, searchTerm]);
-    //inherit
-    useMemo(() => {
-        setSelectedOptions(options.slice(0, 10));
-    }, [options]);
-
-    const toggleMetric = (metric) => {
-        setActiveMetrics((prev) =>
-            prev.includes(metric)
-                ? prev.filter((m) => m !== metric)
-                : [...prev, metric]
-        );
-    };
-
-    const sumReportValue = (key) => {
-        return filteredByDate.reduce((total, entry) => {
-            return total + (entry?.report?.[key] || 0);
-        }, 0);
-    };
-    //inherit
-    const totalImpression = sumReportValue("impression"); // iklan dilihat
-    const totalClick = sumReportValue("click"); // jumlah klik
+        const angkaString = String(angka);
+        const angkaPotong = angkaString.slice(0, indexPotong + 1);
+        return parseInt(angkaPotong);
+    }
 
     useEffect(() => {
-        let filtered = filteredByDate;
-        if (debouncedSearchTerm !== "") {
-            filtered = filtered.filter((entry) =>
-                entry.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+        const fetchProductDetail = (id) => {
+            return jsonData.data.data.entry_list.find(
+                (product) => product.campaign.campaign_id === parseInt(id)
             );
-        }
+        };
+        const detail = fetchProductDetail(id);
+        setadsProductDetail(detail);
+    }, [id]);
 
-        if (activeFilter !== "all") {
-            filtered = filtered.filter((entry) => entry.state === activeFilter);
-        }
+    useEffect(() => {
+        if (adsProductDetail) {
+            const startTimestamp = new Date(startDate).getTime() / 1000;
+            const endTimestamp = new Date(endDate).getTime() / 1000;
 
-        if (selectedTypes.length > 0) {
-            const selectedValues = selectedTypes.map((type) => type.value);
-            filtered = filtered.filter((entry) =>
-                selectedValues.includes(entry.type)
-            );
-        }
+            const filteredData = [];
+            for (let ts = startTimestamp; ts <= endTimestamp; ts += 86400) {
+                const date = new Date(ts * 1000).toISOString().split('T')[0];
+                const metrics = { date };
 
-        setFilteredData(filtered);
-    }, [debouncedSearchTerm, activeFilter, filteredByDate, selectedTypes]);
+                if (selectedMetrics.includes('impression')) {
+                    metrics.impression = parseFloat(adsProductDetail.report.impression).toFixed(2);
+                }
+                if (selectedMetrics.includes('click')) {
+                    metrics.click = parseFloat(adsProductDetail.report.click).toFixed(2);
+                }
+                if (selectedMetrics.includes('ctr')) {
+                    metrics.ctr = parseFloat(adsProductDetail.report.ctr * 100).toFixed(2);
+                }
+
+                filteredData.push(metrics);
+            }
+            setChartData(filteredData);
+        }
+    }, [adsProductDetail, startDate, endDate, selectedMetrics]);
+
+
+    const handleMetricSelection = (metric) => {
+        setSelectedMetrics((prevMetrics) => {
+            if (prevMetrics.includes(metric)) {
+                return prevMetrics.filter((m) => m !== metric);
+            } else {
+                return [...prevMetrics, metric];
+            }
+        });
+    };
+
+    if (!adsProductDetail) {
+        return <div>Loading...</div>;
+    }
 
     return (
-        <>
-            {/* area satu */}
-            <div className="d-flex flex-column gap-2 mb-5">
-                <div className="d-flex justify-content-between align-items-center">
-                    <h4 className="mb-1 fw-medium">Peforma Seluruh Iklan</h4>
-                    <div className="d-flex gap-2">
-                        <input
-                            type="date"
-                            className="form-control"
-                            value={startDate}
-                            onChange={(e) => handleDateChange("start", e.target.value)}
-                        />
-                        <input
-                            type="date"
-                            className="form-control"
-                            value={endDate}
-                            onChange={(e) => handleDateChange("end", e.target.value)}
-                        />
-                    </div>
-                </div>
-                <div className="row g-3">
-                    <div className="col-12 col-md-6 col-lg-3">
-                        <div
-                            style={{ cursor: "pointer" }}
-                            className={`card border-light shadow-sm h-100 ${activeMetrics.includes("impression")
-                                ? "ads-bg-button-filter-impression text-white"
-                                : ""
-                                }`}
-                            onClick={() => toggleMetric("impression")}
-                        >
-                            <div className="card-body">
-                                <h6 className="card-title">Iklan Dilihat</h6>
-                                <p className="card-text fs-4 fw-bold">
-                                    {totalImpression.toLocaleString("id-ID")}
-                                </p>
-                            </div>
+        <DashboardLayout>
+            <div className="container p-3 bg-white rounded gap-2 d-flex flex-column">
+                <div className="d-flex align-items-center mb-3 gap-3">
+                    <img src={"https://down-id.img.susercontent.com/file/" + adsProductDetail?.image} alt={adsProductDetail.title} className="rounded" style={{ width: "100px", height: "100px" }} />
+                    <div>
+                        <h5 className="mb-1">
+                            {adsProductDetail?.title}
+                        </h5>
+                        <div>
+                            <span className="text-secondary">Mode Bidding :</span> <span className="text-primary fw-bold bg-info-subtle px-2 py-1 rounded">{
+                                adsProductDetail?.type == "product_manual" ? "Manual" : "Otomatis"
+                            }</span>
                         </div>
                     </div>
-                    <div className="col-12 col-md-6 col-lg-3">
-                        <div
-                            style={{ cursor: "pointer" }}
-                            className={`card border-light shadow-sm h-100 ${activeMetrics.includes("click")
-                                ? "ads-bg-button-filter-click text-dark"
-                                : ""
-                                }`}
-                            onClick={() => toggleMetric("click")}
-                        >
-                            <div className="card-body">
-                                <h6 className="card-title">Jumlah Klik</h6>
-                                <p className="card-text fs-4 fw-bold">
-                                    {totalClick.toLocaleString("id-ID")}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    {/* dan button lainnya */}
-                </div>
-                <div className="relative w-64" style={{ zIndex: 9999999 }}>
-            {/* Input Search */}
-            <input
-                type="text"
-                placeholder="Cari iklan..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onFocus={() => setDropdownOpen(true)} // Dropdown muncul saat input difokuskan
-                onBlur={() => setTimeout(() => setDropdownOpen(false), 200)} // Hilangkan dropdown saat blur
-                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-
-            {/* Dropdown Options */}
-            {dropdownOpen && (
-                <div
-                    className="mt-1 bg-white border rounded shadow-lg w-full overflow-y-auto" style={{zIndex: 9999999, position: "absolute"}}>
-                    <ul className="list-none p-0 m-0 " style={{ maxHeight: "200px" }}>
-                        {filteredOptions.map((option) => (
-                            <li
-                                key={option.value}
-                                className="flex items-center px-2 py-1 cursor-pointer hover:bg-gray-200"
-                                onClick={() => handleOptionToggle(option)}
-                            >
-                                <input
-                                    type="checkbox"
-                                    checked={selectedOptions.some(
-                                        (selected) => selected.value === option.value
-                                    )}
-                                    onChange={() => handleOptionToggle(option)}
-                                    className="mr-2"
-                                />
-                                {option.label}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-        </div>
-                {/* <div className="relative mt-4">
-                    <button
-                        className="form-control text-left"
-                        onClick={toggleDropdown}
-                    >
-                        {selectedOptions.length
-                            ? selectedOptions.map((opt) => opt.label).join(", ")
-                            : "Pilih iklan yang ditampilkan"}
-                    </button>
-
-                    {dropdownOpen && (
-                        <div className="absolute z-10 mt-1 bg-white border rounded shadow-lg w-full max-h-60 overflow-auto">
-                            <input
-                                type="text"
-                                placeholder="Cari iklan..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full px-2 py-1 border-b"
-                            />
-                            <ul className="list-none p-0 m-0">
-                                {filteredOptions.map((option) => (
-                                    <li
-                                        key={option.value}
-                                        className="flex items-center px-2 py-1 cursor-pointer hover:bg-gray-200"
-                                        onClick={() => handleOptionToggle(option)}
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedOptions.some(
-                                                (selected) => selected.value === option.value
-                                            )}
-                                            onChange={() => handleOptionToggle(option)}
-                                            className="mr-2"
-                                        />
-                                        {option.label}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
-            </div> */}
-                <div className="mt-4">
-                    inforomasi
-                    <Line data={chartData} options={options} />
                 </div>
             </div>
-        </>
+
+            {/* Ads Performance */}
+            <div className="mt-5 d-flex flex-column gap-2">
+                {/* Performance */}
+                <h4 className="fw-bold">Peforma</h4>
+                <div className="container d-flex gap-3 flex-column bg-white p-3 rounded">
+                    <div className="d-flex justify-content-between">
+                        <h6 className="fw-bold">Peforma Iklan</h6>
+                        <div className="d-flex gap-3 mb-3">
+                            <div>
+                                <label htmlFor="start-date">Start Date</label>
+                                <input
+                                    type="date"
+                                    id="start-date"
+                                    value={startDate}
+                                    onChange={(e) => handleDateChange(e, "start")}
+                                    className="form-control"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="end-date">End Date</label>
+                                <input
+                                    type="date"
+                                    id="end-date"
+                                    value={endDate}
+                                    onChange={(e) => handleDateChange(e, "end")}
+                                    className="form-control"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row g-3 justify-content-center border rounded pt-2 pb-4">
+                        <div className="col-12 col-md-6 col-lg-3">
+                            <div
+                                className={`card border-light shadow-sm h-100 ads-detail-button-filter ${selectedMetrics.includes('impression') ? 'ads-detail-bg-button-filter-impression' : ''}`}
+                                onClick={() => handleMetricSelection('impression')}
+                            >
+                                <div className="card-body">
+                                    <h6 className="card-title">Iklan Dilihat</h6>
+                                    <p className="card-text fs-4 fw-bold">
+                                        {adsProductDetail.report.impression}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-12 col-md-6 col-lg-3">
+                            <div
+                                className={`card border-light shadow-sm h-100 ads-detail-button-filter ${selectedMetrics.includes('click') ? 'ads-detail-bg-button-filter-click' : ''}`}
+                                onClick={() => handleMetricSelection('click')}
+                            >
+                                <div className="card-body">
+                                    <h6 className="card-title">Jumlah Klik</h6>
+                                    <p className="card-text fs-4 fw-bold">
+                                        {adsProductDetail.report.click}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-12 col-md-6 col-lg-3">
+                            <div
+                                className={`card border-light shadow-sm h-100 ads-detail-button-filter ${selectedMetrics.includes('ctr') ? 'ads-detail-bg-button-filter-ctr' : ''}`}
+                                onClick={() => handleMetricSelection('ctr')}
+                            >
+                                <div className="card-body">
+                                    <h6 className="card-title">Presentase Klik</h6>
+                                    <p className="card-text fs-4 fw-bold">
+                                        {(adsProductDetail.report.ctr * 100).toFixed(2)}%
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <ResponsiveContainer width="100%" height={400} className="mt-4">
+                            <LineChart data={chartData} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                                <XAxis dataKey="date" />
+                                <YAxis allowDecimals={true} />
+                                <Tooltip />
+                                <Legend />
+                                {selectedMetrics.includes('impression') && (
+                                    <Line type="monotone" dataKey="impression" stroke="#8884d8" strokeWidth={2} />
+                                )}
+                                {selectedMetrics.includes('click') && (
+                                    <Line type="monotone" dataKey="click" stroke="#000000FF" strokeWidth={2} />
+                                )}
+                                {selectedMetrics.includes('ctr') && (
+                                    <Line type="monotone" dataKey="ctr" stroke="#ffc658" strokeWidth={2} />
+                                )}
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+                {/* Analysis */}
+                <h4 className="fw-bold mt-4">Analisis</h4>
+                {/* tabel data */}
+                <div>
+                    <div
+                        className="table-wrapper ads-product-table"
+                        style={{ overflowX: "auto" }}
+                    >
+                        <div
+                            className="d-flex flex-column"
+                            style={{ minWidth: "1400px", maxWidth: "none" }}
+                        >
+                            {/* head table */}
+                            <div id="product-table-head" className="d-flex fw-medium">
+                                <div
+                                    className="d-flex justify-content-center align-items-center border border-info"
+                                    style={{ width: "200px", minWidth: "200px" }}
+                                >
+                                    <span>Keyword</span>
+                                </div>
+                                <div
+                                    className="d-flex justify-content-center align-items-center border border-info"
+                                    style={{ width: "200px", minWidth: "200px" }}
+                                >
+                                    <span>Harga Bid</span>
+                                </div>
+                                <div
+                                    className="d-flex justify-content-center align-items-center border border-info"
+                                    style={{ width: "200px", minWidth: "200px" }}
+                                >
+                                    <span>Iklan Dilihat</span>
+                                </div>
+                                <div
+                                    className="d-flex justify-content-center align-items-center border border-info"
+                                    style={{ width: "200px", minWidth: "200px" }}
+                                >
+                                    <span>Jumlah Klik</span>
+                                </div>
+                            </div>
+                            {/* body table */}
+                            <div className="d-flex flex-column border">
+                                <div
+                                    id="product-table-body"
+                                    className="d-flex border-bottom border-secondary-subtle"
+                                    style={{
+                                        border: "0px 0px 1px 0px",
+                                        borderColor: "#e9ecef",
+                                    }}
+                                >
+                                    {/* Keyword */}
+                                    <div
+                                        className="py-2 px-3"
+                                        style={{ width: "200px", minWidth: "200px" }}
+                                    >
+                                        <div className="d-flex flex-column gap-2">
+                                            {adsProductDetail.manual_product_ads.product_placement.map((product) => (
+                                                <span className='py-1 px-2 bg-primary rounded text-white'>{
+                                                    product == "targeting" ? "Rekomendasi" : "Pencarian"
+                                                }</span>
+                                            ))}
+                                            {adsProductDetail.manual_product_ads.product_placement.length === 1 &&
+                                                adsProductDetail.report.impression < adsProductDetail.manual_product_ads.bidding_price / 1000 ? (
+                                                <span className="text-danger small mt-2">*mohon tambahkan kategori keyword</span>
+                                            ) : adsProductDetail.manual_product_ads.product_placement.length === 1 &&
+                                                adsProductDetail.report.impression > adsProductDetail.manual_product_ads.bidding_price / 1000 ? (
+                                                <span className="text-success small mt-2">*tambahkan keyword lagi untuk meningkatkan iklan lebih ramai</span>
+                                            ) : null}
+
+                                        </div>
+                                    </div>
+                                    {/* Harga Bid */}
+                                    <div
+                                        className="py-2 ps-3"
+                                        style={{ width: "200px", minWidth: "200px" }}
+                                    >
+                                        <div className="d-flex flex-column gap-2">
+                                            <span>
+                                                Rp.
+                                                {adsProductDetail.manual_product_ads.bidding_price.toLocaleString(
+                                                    "id-ID"
+                                                )}
+                                            </span>
+                                            {(adsProductDetail.manual_product_ads.product_placement.length > 1 ||
+                                                adsProductDetail.manual_product_ads.product_placement.length === 1) &&
+                                                adsProductDetail.report.impression < adsProductDetail.manual_product_ads.bidding_price / 1000 ? (
+                                                <span className="text-danger small mt-2">*mohon tambahkan harga bidding iklan</span>
+                                            ) : adsProductDetail.manual_product_ads.product_placement.length > 1 &&
+                                                adsProductDetail.report.impression > adsProductDetail.manual_product_ads.bidding_price / 1000 ? (
+                                                <span className="text-success small mt-2">*tambahkan harga bidding lagi untuk meningkatkan iklan lebih ramai</span>
+                                            ) : null}
+                                        </div>
+                                    </div>
+                                    {/* Iklan dilihat */}
+                                    <div
+                                        className="py-2 ps-3"
+                                        style={{ width: "200px", minWidth: "200px" }}
+                                    >
+                                        <div className="d-flex flex-column">
+                                            <span>
+                                                {adsProductDetail.report.impression}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    {/* Jumlah Klik */}
+                                    <div
+                                        className="py-2 ps-3"
+                                        style={{ width: "200px", minWidth: "200px" }}
+                                    >
+                                        <div className="d-flex flex-column">
+                                            <span>
+                                                {adsProductDetail.report.click}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </DashboardLayout>
     );
 };
-
-export default AdsTable;

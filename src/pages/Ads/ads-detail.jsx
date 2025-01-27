@@ -51,7 +51,7 @@ export default function AdsDetail() {
         if (adsProductDetail) {
             const startTimestamp = new Date(startDate).getTime() / 1000;
             const endTimestamp = new Date(endDate).getTime() / 1000;
-    
+
             const filteredData = [];
             for (let ts = startTimestamp; ts <= endTimestamp; ts += 86400) {
                 const date = new Date(ts * 1000).toISOString().split('T')[0];
@@ -78,13 +78,13 @@ export default function AdsDetail() {
                 if (selectedMetrics.includes('broad_roi')) {
                     metrics.broad_roi = parseFloat(adsProductDetail.report.broad_roi).toFixed(2);
                 }
-    
+
                 filteredData.push(metrics);
             }
             setChartData(filteredData);
         }
     }, [adsProductDetail, startDate, endDate, selectedMetrics]);
-    
+
 
     const handleMetricSelection = (metric) => {
         setSelectedMetrics((prevMetrics) => {
@@ -326,6 +326,178 @@ export default function AdsDetail() {
                                 )}
                             </LineChart>
                         </ResponsiveContainer>
+                    </div>
+
+                    {/* Analysis */}
+                    <h4 className="fw-bold mt-4">Analisis</h4>
+                    {/* tabel data */}
+                    <div>
+                        <div
+                            className="table-wrapper ads-product-table"
+                            style={{ overflowX: "auto" }}
+                        >
+                            <div
+                                className="d-flex flex-column"
+                                style={{ minWidth: "1400px", maxWidth: "none" }}
+                            >
+                                {/* head table */}
+                                <div id="product-table-head" className="d-flex fw-medium">
+                                    <div
+                                        className="d-flex justify-content-center align-items-center border border-info"
+                                        style={{ width: "200px", minWidth: "200px" }}
+                                    >
+                                        <span>Keyword</span>
+                                    </div>
+                                    <div
+                                        className="d-flex justify-content-center align-items-center border border-info"
+                                        style={{ width: "200px", minWidth: "200px" }}
+                                    >
+                                        <span>Harga Bid</span>
+                                    </div>
+                                    <div
+                                        className="d-flex justify-content-center align-items-center border border-info"
+                                        style={{ width: "200px", minWidth: "200px" }}
+                                    >
+                                        <span>Iklan Dilihat</span>
+                                    </div>
+                                    <div
+                                        className="d-flex justify-content-center align-items-center border border-info"
+                                        style={{ width: "200px", minWidth: "200px" }}
+                                    >
+                                        <span>Jumlah Klik</span>
+                                    </div>
+                                    <div
+                                        className="d-flex justify-content-center align-items-center border border-info"
+                                        style={{ width: "200px", minWidth: "200px" }}
+                                    >
+                                        <span>Presentase Klik</span>
+                                    </div>
+                                    <div
+                                        className="d-flex justify-content-center align-items-center border border-info"
+                                        style={{ width: "200px", minWidth: "200px" }}
+                                    >
+                                        <span>Biaya Iklan</span>
+                                    </div>
+                                    <div
+                                        className="d-flex justify-content-center align-items-center border border-info"
+                                        style={{ width: "200px", minWidth: "200px" }}
+                                    >
+                                        <span>Penjualan dari Iklan</span>
+                                    </div>
+                                </div>
+                                {/* body table */}
+                                <div className="d-flex flex-column border">
+                                    <div
+                                        id="product-table-body"
+                                        className="d-flex border-bottom border-secondary-subtle"
+                                        style={{
+                                            border: "0px 0px 1px 0px",
+                                            borderColor: "#e9ecef",
+                                        }}
+                                    >
+                                        {/* Keyword */}
+                                        <div
+                                            className="py-2 px-3"
+                                            style={{ width: "200px", minWidth: "200px" }}
+                                        >
+                                            <div className="d-flex flex-column gap-2">
+                                                {adsProductDetail.manual_product_ads.product_placement.map((product) => (
+                                                    <span className='py-1 px-2 bg-primary rounded text-white'>{
+                                                        product == "targeting" ? "Rekomendasi" : "Pencarian"
+                                                    }</span>
+                                                ))}
+                                                {adsProductDetail.manual_product_ads.product_placement.length === 1 &&
+                                                    adsProductDetail.report.impression < adsProductDetail.manual_product_ads.bidding_price / 1000 ? (
+                                                    <span className="text-danger small mt-2">*mohon tambahkan kategori keyword</span>
+                                                ) : adsProductDetail.manual_product_ads.product_placement.length === 1 &&
+                                                    adsProductDetail.report.impression > adsProductDetail.manual_product_ads.bidding_price / 1000 ? (
+                                                    <span className="text-success small mt-2">*tambahkan keyword lagi untuk meningkatkan iklan lebih ramai</span>
+                                                ) : null}
+                                            </div>
+                                        </div>
+                                        {/* Harga Bid */}
+                                        <div
+                                            className="py-2 ps-3"
+                                            style={{ width: "200px", minWidth: "200px" }}
+                                        >
+                                            <div className="d-flex flex-column gap-2">
+                                                <span>
+                                                    Rp.
+                                                    {adsProductDetail.manual_product_ads.bidding_price.toLocaleString(
+                                                        "id-ID"
+                                                    )}
+                                                </span>
+                                                {(adsProductDetail.manual_product_ads.product_placement.length > 1 ||
+                                                    adsProductDetail.manual_product_ads.product_placement.length === 1) &&
+                                                    adsProductDetail.report.impression < adsProductDetail.manual_product_ads.bidding_price / 1000 ? (
+                                                    <span className="text-danger small mt-2">*mohon tambahkan harga bidding iklan</span>
+                                                ) : adsProductDetail.manual_product_ads.product_placement.length > 1 &&
+                                                    adsProductDetail.report.impression > adsProductDetail.manual_product_ads.bidding_price / 1000 ? (
+                                                    <span className="text-success small mt-2">*tambahkan harga bidding lagi untuk meningkatkan iklan lebih ramai</span>
+                                                ) : null}
+                                            </div>
+                                        </div>
+                                        {/* Iklan dilihat */}
+                                        <div
+                                            className="py-2 ps-3"
+                                            style={{ width: "200px", minWidth: "200px" }}
+                                        >
+                                            <div className="d-flex flex-column">
+                                                <span>
+                                                    {adsProductDetail.report.impression}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        {/* Jumlah Klik */}
+                                        <div
+                                            className="py-2 ps-3"
+                                            style={{ width: "200px", minWidth: "200px" }}
+                                        >
+                                            <div className="d-flex flex-column">
+                                                <span>
+                                                    {adsProductDetail.report.click}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        {/* Presentase Klik */}
+                                        <div
+                                            className="py-2 ps-3"
+                                            style={{ width: "200px", minWidth: "200px" }}
+                                        >
+                                            <div className="d-flex flex-column">
+                                                <span>
+                                                    {(adsProductDetail.report.ctr * 100).toFixed(2)}%
+                                                </span>
+                                            </div>
+                                        </div>
+                                        {/* Biaya Iklan */}
+                                        <div
+                                            className="py-2 ps-3"
+                                            style={{ width: "200px", minWidth: "200px" }}
+                                        >
+                                            <div className="d-flex flex-column">
+                                                <span>
+                                                    Rp.
+                                                    {adsProductDetail.report.cost.toLocaleString("id-ID")}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        {/* Penjualan dari Iklan */}
+                                        <div
+                                            className="py-2 ps-3"
+                                            style={{ width: "200px", minWidth: "200px" }}
+                                        >
+                                            <div className="d-flex flex-column">
+                                                <span>
+                                                    Rp.
+                                                    {adsProductDetail.report.broad_gmv.toLocaleString("id-ID")}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
