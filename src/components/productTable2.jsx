@@ -60,7 +60,7 @@ const ProductTable = ({ data }) => {
                         <th>Penjualan</th>
                         <th>Harga</th>
                         <th>Stok</th>
-                        <th>Kualitas Informasi</th>
+                        <th>Kualitas</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,7 +68,7 @@ const ProductTable = ({ data }) => {
                         <React.Fragment key={entry.id}>
                             {/* Row main products */}
                             <tr className="border border-2">
-                                <td id="main-products" rowSpan={entry.model_list.length + 1} className="products-main-link">
+                                <td id="main-products" rowSpan={entry.model_list.length + 1} className="products-main-link" style={{ maxWidth: "420px" }}>
                                     <div className="text-black fw-medium d-flex flex-column">
                                         <img src={`https://down-id.img.susercontent.com/file/` + entry.cover_image} alt={entry.name} className="rounded" style={{ width: "70px", height: "70px" }} />
                                         <div className="d-flex flex-column">
@@ -82,16 +82,22 @@ const ProductTable = ({ data }) => {
                                         </div>
                                     </div>
                                 </td>
-                                <td className="products-main-link">{entry.stock_detail.total_available_stock}</td>
+                                <td className="products-main-link">{entry.statistics.sold_count}</td>
                                 <td className="products-main-link">{entry.price_detail.selling_price_min.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}</td>
-                                <td className="products-main-link">{
+                                <td style={{ maxWidth: "100px"}} className="products-main-link">
+                                {
                                     entry.stock_detail.total_available_stock === 0 ? (
-                                        <span className="fw-bold text-danger">HABIS</span>
-                                    ) : entry.new_stock
-                                }</td>
-                                <td colSpan={5} className="products-main-link d-flex flex-column" style={{
+                                        <div className="d-flex flex-column">
+                                            <span className="fw-bold text-danger">HABIS</span>
+                                            <span className="text-muted" style={{fontSize: "12px"}}>*SEGERA tambahkan stok lagi</span>
+                                        </div>
+                                    ) : entry.stock_detail.total_available_stock
+                                }
+                                </td>
+                                <td  className="products-main-link d-flex flex-column" style={{
                                     borderBottom: "0px",
                                     height: "90.5px",
+                                    maxWidth: "100px",
                                 }}>
                                     {checkCondition("Baik")}
                                     {informationCondition("Baik")}

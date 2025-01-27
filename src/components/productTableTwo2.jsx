@@ -34,7 +34,7 @@ const ProductTable = ({ data }) => {
 
     return (
         <div className="data-product-table">
-            <h5 className="mb-3">{data.total} total produk</h5>
+            <h5 className="mb-3">{data.page_info.total} total produk</h5>
             {/* Input pencarian */}
             <input
                 type="text"
