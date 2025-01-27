@@ -21,7 +21,7 @@ const Sidebar = () => {
     return (
         <div className="d-flex flex-column bg-dark text-white h-100">
             <div className="p-3">
-                <Link to="/" className="text-white link-offset-2 link-underline link-underline-opacity-0">
+                <Link to="/home" className="text-white link-offset-2 link-underline link-underline-opacity-0">
                     <h5 className="text-center h2 mb-3">MENU</h5>
                 </Link>
                 <hr className="text-white" />
@@ -29,7 +29,7 @@ const Sidebar = () => {
                     {/* Home Menu */}
                     <li className="nav-item py-2">
                         <Link
-                            to="/"
+                            to="/home"
                             className={`nav-link ${pathLocation.pathname === '/' ? ' bg-info-subtle text-black' : 'text-white'} hover-effect`}
                         >
                             Home

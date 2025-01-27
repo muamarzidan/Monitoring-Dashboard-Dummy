@@ -1,7 +1,7 @@
 import React from 'react'
 import DashboardLayout from '../../components/DashboardLayout';
 import ProductTable2 from '../../components/productTableTwo2';
-import jsonData from '../../api/dummyProductsNew.json';
+import jsonData from '../../api/dummyProducts.json';
 
 export default function ProdukRecomendationPage() {
     return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import DashboardLayout from '../../components/DashboardLayout';
-import jsonData from '../../api/testttt.json';
+import jsonData from '../../api/dummyAds.json';
 import {
     LineChart,
     Line,
@@ -39,7 +39,7 @@ export default function AdsDetail() {
 
     useEffect(() => {
         const fetchProductDetail = (id) => {
-            return jsonData.data.entry_list.find(
+            return jsonData.data.data.entry_list.find(
                 (product) => product.campaign.campaign_id === parseInt(id)
             );
         };
@@ -263,7 +263,7 @@ export default function AdsDetail() {
                                 <div className="card-body">
                                     <h6 className="card-title">Penjualan dari Iklan</h6>
                                     <p className="card-text fs-4 fw-bold">
-                                        Rp.{potongAngka(adsProductDetail.report.broad_gmv).toLocaleString('id-ID')}
+                                        Rp.{adsProductDetail.report.broad_gmv.toLocaleString('id-ID')}
                                     </p>
                                 </div>
                             </div>
@@ -276,7 +276,7 @@ export default function AdsDetail() {
                                 <div className="card-body">
                                     <h6 className="card-title">Biaya Iklan</h6>
                                     <p className="card-text fs-4 fw-bold">
-                                        Rp.{potongAngka(adsProductDetail.report.cost).toLocaleString('id-ID')}
+                                        Rp.{adsProductDetail.report.cost.toLocaleString('id-ID')}
                                     </p>
                                 </div>
                             </div>

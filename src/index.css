@@ -170,3 +170,20 @@
   border-color: #000272FF;
   transform: scale(1.1);
 }
+
+.filter-chart input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  /* appearance: none; */
+  cursor: pointer;
+  transition: all 0.4s ease;
+  padding: 5px;
+  margin: 2px 5px 0 0;
+}
+
+.filter-chart input[type="checkbox"]:hover {
+  border-color: #000272FF;
+  transform: scale(1.1);
+}

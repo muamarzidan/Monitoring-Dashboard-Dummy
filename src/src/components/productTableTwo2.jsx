@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import useDebounce from "../hooks/useDebounce";
 
 const ProductTable = ({ data }) => {
@@ -21,8 +20,8 @@ const ProductTable = ({ data }) => {
     }, [debouncedSearchTerm, data.products]);
 
     const isRecommended = (variants, defaultStock) => {
-        const totalNewStock = variants.reduce((acc, variant) => acc + variant.stock_detail.total_available_stock);
-        return totalNewStock >= 0.70 * defaultStock;
+        const totalNewStock = variants.reduce((acc, variant) => acc + variant.stock_detail.total_available_stock, 0);
+        return totalNewStock > 0.70 * defaultStock+1;
     };
 
     const checkIsRecommended = (variants, defaultStock) => {
@@ -85,9 +84,9 @@ const ProductTable = ({ data }) => {
                                         borderBottom: "0px",
                                         height: "129px",
                                     }}>
-                                    {entry.new_stock === 0 ? (
+                                    {entry.stock_detail.total_available_stock === 0 ? (
                                         <span className="fw-bold text-danger">HABIS</span>
-                                    ) : entry.new_stock
+                                    ) : entry.stock_detail.total_available_stock
                                 }</td>
                                 <td className={`products-main-link d-flex flex-column ${isRecommended(entry.model_list, entry.stock_detail.total_available_stock)
                                     ? "bg-success bg-opacity-10"
@@ -107,7 +106,7 @@ const ProductTable = ({ data }) => {
                             {/* Row model products */}
                             {entry.model_list.map((model, index) => (
                                 <tr key={`${entry.id}-model-${index}`} className="border border-0 border-white">
-                                    <td>{model.statistics.sold_count}</td>
+                                    <td>{model.stock_detail.total_available_stock}</td>
                                     <td></td>
                                 </tr>
                             ))}

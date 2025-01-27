@@ -1,0 +1,91 @@
+{
+  "code": 200,
+  "status": "OK",
+  "message": "Product ads scraped successfully.",
+  "data": {
+    "code": 0,
+    "msg": "OK",
+    "debug_detail": "",
+    "validation_error_list": null,
+    "data": {
+      "entry_list": [
+        {
+          "campaign": {
+            "campaign_id": 277232042,
+            "daily_budget": 300000,
+            "end_time": 0,
+            "start_time": 1726678800,
+            "total_budget": 0
+          },
+          "display_ads": null,
+          "editable_list": ["status", "budget", "time"],
+          "image": "id-11134207-7r990-lzty4rul199c76",
+          "live_stream_ads": null,
+          "manual_shop_ads": null,
+          "ratio": {
+            "broad_cir": 0,
+            "broad_gmv": 0,
+            "broad_order": 0,
+            "broad_order_amount": 0,
+            "broad_roi": 0,
+            "checkout": 0
+          },
+          "report": {
+            "broad_cir": 0.13940415,
+            "broad_gmv": 4900000,
+            "broad_order": 1,
+            "broad_order_amount": 1,
+            "broad_roi": 7.173387592837085,
+            "checkout": 0
+          },
+          "search_brand_ads": null,
+          "state": "ongoing",
+          "subtype": null,
+          "title": "Topi Rambut Supporter Bola - Supporter Esport - Topi Rambut Palsu Palestina",
+          "trait_list": ["item_sold_out"],
+          "type": "product_manual",
+          "video_ads": null
+        },
+        {
+          "campaign": {
+            "campaign_id": 277230066,
+            "daily_budget": 300000,
+            "end_time": 0,
+            "start_time": 1726678800,
+            "total_budget": 0
+          },
+          "display_ads": null,
+          "editable_list": ["status", "budget", "time"],
+          "image": "id-11134207-7r98r-lzwqfezigcrx02",
+          "live_stream_ads": null,
+          "manual_shop_ads": null,
+          "ratio": {
+            "broad_cir": 0,
+            "broad_gmv": 0,
+            "broad_order": 0,
+            "broad_order_amount": 0,
+            "broad_roi": 0,
+            "checkout": 0
+          },
+          "report": {
+            "broad_cir": 0.1052830412244898,
+            "broad_gmv": 4900000,
+            "broad_order": 1,
+            "broad_order_amount": 1,
+            "broad_roi": 9.498205868386245,
+            "checkout": 1
+          },
+          "search_brand_ads": null,
+          "state": "ongoing",
+          "subtype": null,
+          "title": "Topi Rambut Palestina - Topi Rambut Palsu - Topi Wig Palestina - Topi Bulu",
+          "trait_list": ["item_sold_out"],
+          "type": "product_manual",
+          "video_ads": null
+        }
+        // More data
+      ],
+      "total": 400
+    }
+  }
+}

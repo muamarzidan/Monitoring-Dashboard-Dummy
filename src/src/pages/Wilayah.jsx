@@ -1,7 +1,5 @@
 import React from 'react';
 import DashboardLayout from '../components/DashboardLayout';
-import ChartWilayahDate from '../components/chartWilayah';
-import ChartWilayahDate2 from '../components/chartWilayah2';
 import ChartWilayahDate3 from '../components/chartWilayah3';
 
 const WilayahPage = () => {
