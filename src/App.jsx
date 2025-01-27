@@ -2,13 +2,13 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import "../src/App.css";
 
-import LoginPage from './src/pages/Auth/login';
-import HomePage from './src/pages/Home';
-import AdsPage from './src/pages/Ads/home';
-import AdsDetailPage from './src/pages/Ads/ads-detail';
-import ProductPage from './src/pages/Product/product';
-import ProductRecomendationPage from './src/pages/Product/product-recomendation';
-import WilayahPage from './src/pages/Wilayah';
+import LoginPage from './pages/Auth/login';
+import HomePage from './pages/Home';
+import AdsPage from './pages/Ads/home';
+import AdsDetailPage from './pages/Ads/ads-detail';
+import ProductPage from './pages/Product/product';
+import ProductRecomendationPage from './pages/Product/product-recomendation';
+import WilayahPage from './pages/Wilayah';
 
 const App = () => {
   return (
