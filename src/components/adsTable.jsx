@@ -20,8 +20,10 @@ const AdsTable = ({ data }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchProductChart, setSearchProductChart] = useState("");
   const [filteredData, setFilteredData] = useState([]);
-  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+  const debouncedSearchTerm = useDebounce(searchTerm, 50);
+  const debouncedSearchProductChart = useDebounce(searchProductChart, 50);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [activeMetrics, setActiveMetrics] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -77,9 +79,9 @@ const AdsTable = ({ data }) => {
 
   const filteredOptions = useMemo(() => {
     return options.filter((option) =>
-      option.label.toLowerCase().includes(searchTerm.toLowerCase())
+      option.label.toLowerCase().includes(searchProductChart.toLowerCase())
     );
-  }, [options, searchTerm]);
+  }, [options, searchProductChart]);
   //inherit
   useMemo(() => {
     setSelectedOptions(options.slice(0, 10));
@@ -507,9 +509,16 @@ const AdsTable = ({ data }) => {
   // all data filter
   useEffect(() => {
     let filtered = filteredByDate;
+    let filteredProductChart = filteredByDate;
     if (debouncedSearchTerm !== "") {
       filtered = filtered.filter((entry) =>
         entry.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+      );
+    }
+
+    if (debouncedSearchProductChart != "") {
+      filteredProductChart = filteredProductChart.filter((entry) =>
+        entry.title.toLowerCase().includes(debouncedSearchProductChart.toLowerCase())
       );
     }
 
@@ -525,7 +534,7 @@ const AdsTable = ({ data }) => {
     }
 
     setFilteredData(filtered);
-  }, [debouncedSearchTerm, activeFilter, filteredByDate, selectedTypes]);
+  }, [debouncedSearchTerm, debouncedSearchProductChart, activeFilter, filteredByDate, selectedTypes]);
 
   return (
     <>
@@ -698,8 +707,8 @@ const AdsTable = ({ data }) => {
           <input
             type="text"
             placeholder="Cari produk berdasarkan nama..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchProductChart}
+            onChange={(e) => setSearchProductChart(e.target.value)}
             onFocus={() => setDropdownOpen(true)}
             onBlur={() => setTimeout(() => setDropdownOpen(false), 200)}
             className="w-100 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"

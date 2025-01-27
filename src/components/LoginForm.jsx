@@ -70,10 +70,10 @@ const LoginForm = () => {
               Show Password
             </label>
           </div>
-          <button type="submit" className="btn btn-primary w-100" disabled={isLoading}>
+          <button type="submit" className="btn btn-info w-100 fw-medium" style={{color: "white"}} disabled={isLoading}>
             {isLoading ? (
               <div className="spinner-border spinner-border-sm" role="status">
-                <span className="visually-hidden">Loading...</span>
+                <span className="visually-hidden ">Loading...</span>
               </div>
             ) : (
               "Sign In"
