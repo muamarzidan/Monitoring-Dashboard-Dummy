@@ -1,0 +1,302 @@
+{
+    "code": 0,
+    "message": "success",
+    "user_message": "success",
+    "data": {
+        "page_info": {
+            "total": 16,
+            "page_number": 1,
+            "page_size": 12
+        },
+        "products": [
+            {
+                "id": 26360011113,
+                "name": "Udeng Merah Putih - Topi Udeng Bulu Viral - Ikat Kepala Udeng Rambut Palsu - Iket Kepala Merah Putih",
+                "status": 1,
+                "cover_image": "id-11134207-7r98s-m0cinkcvf78617",
+                "parent_sku": "UMP",
+                "price_detail": {
+                    "price_min": "129000.00",
+                    "price_max": "129000.00",
+                    "has_discount": false,
+                    "max_discount_percentage": 100,
+                    "max_discount": 0,
+                    "selling_price_min": "129000.00",
+                    "selling_price_max": "129000.00"
+                },
+                "stock_detail": {
+                    "total_available_stock": 50,
+                    "total_seller_stock": 0,
+                    "total_shopee_stock": 0,
+                    "low_stock_status": 0,
+                    "enable_stock_reminder": false,
+                    "model_seller_stock_sold_out": true,
+                    "model_shopee_stock_sold_out": false,
+                    "advanced_stock": {
+                        "sellable_stock": 0,
+                        "in_transit_stock": 0
+                    },
+                    "enable_stock_reminder_status": 0
+                },
+                "statistics": {
+                    "view_count": 0,
+                    "liked_count": 0,
+                    "sold_count": 50
+                },
+                "model_list": [
+                    {
+                        "id": 138034277452,
+                        "name": "Merah Putih",
+                        "sku": "",
+                        "tier_index": [
+                            0
+                        ],
+                        "stock_detail": {
+                            "advanced_stock": {
+                                "sellable_stock": 0,
+                                "in_transit_stock": 0
+                            },
+                            "total_available_stock": 10,
+                            "total_seller_stock": 0,
+                            "total_shopee_stock": 0
+                        },
+                        "is_default": false,
+                        "image": "id-11134207-7r98q-lzpfxykldi3i21",
+                        "tag": {
+                            "is_partial_fulfillment": false
+                        },
+                        "statistics": {
+                            "sold_count": 10
+                        },
+                        "price_detail": {
+                            "origin_price": "129000.00",
+                            "promotion_price": "0.00"
+                        }
+                    },
+                    {
+                        "id": 138034277453,
+                        "name": "Hitam",
+                        "sku": "",
+                        "tier_index": [
+                            1
+                        ],
+                        "stock_detail": {
+                            "advanced_stock": {
+                                "sellable_stock": 0,
+                                "in_transit_stock": 0
+                            },
+                            "total_available_stock": 10,
+                            "total_seller_stock": 0,
+                            "total_shopee_stock": 0
+                        },
+                        "is_default": false,
+                        "image": "id-11134207-7r98t-lzpfxyklewny89",
+                        "tag": {
+                            "is_partial_fulfillment": false
+                        },
+                        "statistics": {
+                            "sold_count": 10
+                        },
+                        "price_detail": {
+                            "origin_price": "129000.00",
+                            "promotion_price": "0.00"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": 24785707560,
+                "name": "Topi Rambut Supporter Bola - Supporter Esport - Topi Rambut Palsu Palestina",
+                "status": 1,
+                "cover_image": "id-11134207-7r990-lzty4rul199c76",
+                "parent_sku": "TD",
+                "price_detail": {
+                    "price_min": "100000.00",
+                    "price_max": "100000.00",
+                    "has_discount": false,
+                    "max_discount_percentage": 100,
+                    "max_discount": 0,
+                    "selling_price_min": "100000.00",
+                    "selling_price_max": "100000.00"
+                },
+                "stock_detail": {
+                    "total_available_stock": 0,
+                    "total_seller_stock": 0,
+                    "total_shopee_stock": 0,
+                    "low_stock_status": 0,
+                    "enable_stock_reminder": false,
+                    "model_seller_stock_sold_out": true,
+                    "model_shopee_stock_sold_out": false,
+                    "advanced_stock": {
+                        "sellable_stock": 0,
+                        "in_transit_stock": 0
+                    },
+                    "enable_stock_reminder_status": 0
+                },
+                "statistics": {
+                    "view_count": 0,
+                    "liked_count": 0,
+                    "sold_count": 2
+                },
+                "model_list": [
+                    {
+                        "id": 256704217361,
+                        "name": "Timnas",
+                        "sku": "",
+                        "tier_index": [
+                            8
+                        ],
+                        "stock_detail": {
+                            "advanced_stock": {
+                                "sellable_stock": 0,
+                                "in_transit_stock": 0
+                            },
+                            "total_available_stock": 0,
+                            "total_seller_stock": 0,
+                            "total_shopee_stock": 0
+                        },
+                        "is_default": false,
+                        "image": "id-11134207-7rasg-m0vc2cbrqb1221",
+                        "tag": {
+                            "is_partial_fulfillment": false
+                        },
+                        "statistics": {
+                            "sold_count": 1
+                        },
+                        "price_detail": {
+                            "origin_price": "100000.00",
+                            "promotion_price": "0.00"
+                        }
+                    },
+                    {
+                        "id": 256704217358,
+                        "name": "Arema",
+                        "sku": "",
+                        "tier_index": [
+                            9
+                        ],
+                        "stock_detail": {
+                            "advanced_stock": {
+                                "sellable_stock": 0,
+                                "in_transit_stock": 0
+                            },
+                            "total_available_stock": 0,
+                            "total_seller_stock": 0,
+                            "total_shopee_stock": 0
+                        },
+                        "is_default": false,
+                        "image": "id-11134207-7rasl-m0vc2cbrrplic4",
+                        "tag": {
+                            "is_partial_fulfillment": false
+                        },
+                        "statistics": {
+                            "sold_count": 0
+                        },
+                        "price_detail": {
+                            "origin_price": "100000.00",
+                            "promotion_price": "0.00"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": 25685707370,
+                "name": "Topi Rambut Palsu - Topi Wig - Topi Bulu - Topi Sule - Topi Rambut",
+                "status": 1,
+                "cover_image": "id-11134207-7r98y-m0ci6qppe9a667",
+                "parent_sku": "TD",
+                "price_detail": {
+                    "price_min": "100000.00",
+                    "price_max": "100000.00",
+                    "has_discount": false,
+                    "max_discount_percentage": 100,
+                    "max_discount": 0,
+                    "selling_price_min": "100000.00",
+                    "selling_price_max": "100000.00"
+                },
+                "stock_detail": {
+                    "total_available_stock": 0,
+                    "total_seller_stock": 0,
+                    "total_shopee_stock": 0,
+                    "low_stock_status": 0,
+                    "enable_stock_reminder": false,
+                    "model_seller_stock_sold_out": true,
+                    "model_shopee_stock_sold_out": false,
+                    "advanced_stock": {
+                        "sellable_stock": 0,
+                        "in_transit_stock": 0
+                    },
+                    "enable_stock_reminder_status": 0
+                },
+                "statistics": {
+                    "view_count": 0,
+                    "liked_count": 0,
+                    "sold_count": 0
+                },
+                "modify_time": 1727854889,
+                "create_time": 1725591781,
+                "model_list": [
+                    {
+                        "id": 205370233556,
+                        "name": "Biru Hitam",
+                        "sku": "",
+                        "tier_index": [
+                            20
+                        ],
+                        "stock_detail": {
+                            "advanced_stock": {
+                                "sellable_stock": 0,
+                                "in_transit_stock": 0
+                            },
+                            "total_available_stock": 0,
+                            "total_seller_stock": 0,
+                            "total_shopee_stock": 0
+                        },
+                        "is_default": false,
+                        "image": "id-11134207-7r98z-lztxshm8f76wd9",
+                        "tag": {
+                            "is_partial_fulfillment": false
+                        },
+                        "statistics": {
+                            "sold_count": 0
+                        },
+                        "price_detail": {
+                            "origin_price": "100000.00",
+                            "promotion_price": "0.00"
+                        }
+                    },
+                    {
+                        "id": 205370233539,
+                        "name": "Merah",
+                        "sku": "",
+                        "tier_index": [
+                            10
+                        ],
+                        "stock_detail": {
+                            "advanced_stock": {
+                                "sellable_stock": 0,
+                                "in_transit_stock": 0
+                            },
+                            "total_available_stock": 0,
+                            "total_seller_stock": 0,
+                            "total_shopee_stock": 0
+                        },
+                        "is_default": false,
+                        "image": "id-11134207-7r991-lztxpdomkoqt87",
+                        "tag": {
+                            "is_partial_fulfillment": false
+                        },
+                        "statistics": {
+                            "sold_count": 0
+                        },
+                        "price_detail": {
+                            "origin_price": "100000.00",
+                            "promotion_price": "0.00"
+                        }
+                    }
+                ]
+            }
+            // and more data
+        ]
+    }
+}

@@ -68,7 +68,7 @@ const ProductTable = ({ data }) => {
                         <React.Fragment key={entry.id}>
                             {/* Row main products */}
                             <tr className="border border-2">
-                                <td id="main-products" rowSpan={entry.model_list.length + 1} className="products-main-link" style={{ maxWidth: "420px" }}>
+                                <td id="main-products" rowSpan={entry.model_list.length + 1} className="products-main-link" style={{ maxWidth: "490px" }}>
                                     <div className="text-black fw-medium d-flex flex-column">
                                         <img src={`https://down-id.img.susercontent.com/file/` + entry.cover_image} alt={entry.name} className="rounded" style={{ width: "70px", height: "70px" }} />
                                         <div className="d-flex flex-column">
@@ -84,7 +84,7 @@ const ProductTable = ({ data }) => {
                                 </td>
                                 <td className="products-main-link">{entry.statistics.sold_count}</td>
                                 <td className="products-main-link">{entry.price_detail.selling_price_min.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}</td>
-                                <td style={{ maxWidth: "100px"}} className="products-main-link">
+                                <td style={{ maxWidth: "150px"}} className="products-main-link">
                                 {
                                     entry.stock_detail.total_available_stock === 0 ? (
                                         <div className="d-flex flex-column">
@@ -94,10 +94,10 @@ const ProductTable = ({ data }) => {
                                     ) : entry.stock_detail.total_available_stock
                                 }
                                 </td>
-                                <td  className="products-main-link d-flex flex-column" style={{
+                                <td  className="products-main-link d-flex flex-column align-items-center w-100" style={{
                                     borderBottom: "0px",
                                     height: "90.5px",
-                                    maxWidth: "100px",
+                                    maxWidth: "200px",
                                 }}>
                                     {checkCondition("Baik")}
                                     {informationCondition("Baik")}

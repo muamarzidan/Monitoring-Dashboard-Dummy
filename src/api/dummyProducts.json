@@ -2833,7 +2833,7 @@
                 "statistics": {
                     "view_count": 0,
                     "liked_count": 0,
-                    "sold_count": 3
+                    "sold_count": 15
                 },
                 "tag": {
                     "is_virtual_sku": false,
@@ -2877,7 +2877,7 @@
                             "is_partial_fulfillment": false
                         },
                         "statistics": {
-                            "sold_count": 1
+                            "sold_count": 13
                         },
                         "price_detail": {
                             "origin_price": "90000.00",

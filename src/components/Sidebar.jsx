@@ -96,6 +96,18 @@ const Sidebar = () => {
                 </li>
                 <li className="nav-item">
                   <Link
+                    to="/product-clasification"
+                    className={`nav-link ${
+                      pathLocation.pathname === "/product-clasification"
+                        ? " bg-info-subtle text-black"
+                        : "text-white"
+                    } hover-effect`}
+                  >
+                    Klasifikasi Produk
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
                     to="/product-ads-all"
                     className={`nav-link ${
                       pathLocation.pathname === "/product-ads-all"
