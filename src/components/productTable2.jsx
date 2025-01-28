@@ -20,11 +20,11 @@ const ProductTable = ({ data }) => {
     }, [debouncedSearchTerm, data.products]);
 
     const checkCondition = (condition) => {
-        if (condition === "Belum ada informasi") {
+        if (condition.toLowerCase() === "tidak ada informasi") {
             return <span className="text-warning text-center fw-bold py-2 px-3 bg-warning rounded bg-opacity-10">Belum ada informasi</span>;
-        } else if (condition === "Buruk") {
+        } else if (condition.toLowerCase() === "buruk") {
             return <span className="text-danger text-center fw-bold py-2 px-4 bg-danger rounded bg-opacity-10">Buruk</span>;
-        } else if (condition === "Baik") {
+        } else if (condition.toLowerCase() === "baik") {
             return <span className="text-success text-center fw-bold py-2 px-4 bg-success rounded bg-opacity-10">Baik</span>;
         } else {
             return <span className="text-success text-center fw-bold py-2 px-4 bg-success rounded bg-opacity-10">Sangat baik</span>;
@@ -32,11 +32,11 @@ const ProductTable = ({ data }) => {
     };
 
     const informationCondition = (condition) => {
-        if (condition === "Belum ada informasi") {
+        if (condition.toLowerCase() === "tidak ada informasi") {
             return <span className="text-body-tertiary fw-medium" style={{fontSize: "12px"}}>*produk belum siap dijual</span>;
-        } else if (condition === "Buruk") {
+        } else if (condition.toLowerCase() === "buruk") {
             return <span className="text-body-tertiary fw-medium" style={{fontSize: "12px"}}>*produk tidak layak dijual</span>;
-        } else if (condition === "Baik") {
+        } else if (condition.toLowerCase() === "baik") {
             return <span className="text-body-tertiary fw-medium" style={{fontSize: "12px"}}>*2 produk tidak ada detail informasi</span>;
         } else {
             return <span className="text-body-tertiary fw-medium" style={{fontSize: "12px"}}>*produk layak dijual</span>;
@@ -99,8 +99,8 @@ const ProductTable = ({ data }) => {
                                     height: "90.5px",
                                     maxWidth: "200px",
                                 }}>
-                                    {checkCondition("Baik")}
-                                    {informationCondition("Baik")}
+                                    {checkCondition(entry.condition)}
+                                    {informationCondition(entry.condition)}
                                 </td>
                             </tr>
                             {/* Row model products */}

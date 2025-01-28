@@ -10,6 +10,7 @@
     "data": {
       "entry_list": [
         {
+          "performance_type" : "good",
           "campaign": {
             "campaign_id": 277232042,
             "daily_budget": 300000,
@@ -103,6 +104,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "good",
           "campaign": {
             "campaign_id": 277230066,
             "daily_budget": 300000,
@@ -196,6 +198,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "bad",
           "campaign": {
             "campaign_id": 277724566,
             "daily_budget": 300000,
@@ -289,6 +292,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "good",
           "campaign": {
             "campaign_id": 278168523,
             "daily_budget": 500000,
@@ -382,6 +386,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "good",
           "campaign": {
             "campaign_id": 277227097,
             "daily_budget": 300000,
@@ -474,6 +479,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "good",
           "campaign": {
             "campaign_id": 277223681,
             "daily_budget": 300000,
@@ -566,6 +572,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "bad",
           "campaign": {
             "campaign_id": 278167805,
             "daily_budget": 500000,
@@ -658,6 +665,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "good",
           "campaign": {
             "campaign_id": 277230494,
             "daily_budget": 300000,
@@ -750,6 +758,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "bad",
           "campaign": {
             "campaign_id": 278165176,
             "daily_budget": 500000,
@@ -842,6 +851,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "bad",
           "campaign": {
             "campaign_id": 277721725,
             "daily_budget": 300000,
@@ -934,6 +944,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "bad",
           "campaign": {
             "campaign_id": 277727318,
             "daily_budget": 300000,
@@ -1026,6 +1037,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : null,
           "campaign": {
             "campaign_id": 277228091,
             "daily_budget": 300000,
@@ -1118,6 +1130,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "bad",
           "campaign": {
             "campaign_id": 277728325,
             "daily_budget": 300000,
@@ -1210,6 +1223,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "good",
           "campaign": {
             "campaign_id": 277727816,
             "daily_budget": 300000,
@@ -1302,6 +1316,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "good",
           "campaign": {
             "campaign_id": 277723087,
             "daily_budget": 300000,
@@ -1394,6 +1409,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "good",
           "campaign": {
             "campaign_id": 277725008,
             "daily_budget": 300000,
@@ -1486,6 +1502,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "good",
           "campaign": {
             "campaign_id": 277227088,
             "daily_budget": 300000,
@@ -1578,6 +1595,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "good",
           "campaign": {
             "campaign_id": 277231544,
             "daily_budget": 300000,
@@ -1670,6 +1688,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "good",
           "campaign": {
             "campaign_id": 278167007,
             "daily_budget": 500000,
@@ -1762,6 +1781,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "good",
           "campaign": {
             "campaign_id": 277723094,
             "daily_budget": 300000,
@@ -1854,6 +1874,7 @@
           "video_ads": null
         },
         {
+          "performance_type" : "bad",
           "campaign": {
             "campaign_id": 277724198,
             "daily_budget": 300000,

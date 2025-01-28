@@ -10,6 +10,7 @@
         },
         "products": [
             {
+                "condition" : "baik",
                 "id": 26360011113,
                 "name": "Udeng Merah Putih - Topi Udeng Bulu Viral - Ikat Kepala Udeng Rambut Palsu - Iket Kepala Merah Putih",
                 "status": 1,
@@ -196,6 +197,7 @@
                 }
             },
             {
+                "condition" : "buruk",
                 "id": 24785707560,
                 "name": "Topi Rambut Supporter Bola - Supporter Esport - Topi Rambut Palsu Palestina",
                 "status": 1,
@@ -614,6 +616,7 @@
                 }
             },
             {
+                "condition" : "sangat baik",
                 "id": 25685707370,
                 "name": "Topi Rambut Palsu - Topi Wig - Topi Bulu - Topi Sule - Topi Rambut",
                 "status": 1,
@@ -1293,6 +1296,7 @@
                 }
             },
             {
+                "condition" : "sangat baik",
                 "id": 26910219677,
                 "name": "Topi Rambut Palsu - Topi Golf Rambut Palsu - Topi Golf",
                 "status": 1,
@@ -1566,6 +1570,7 @@
                 }
             },
             {
+                "condition" : "tidak ada informasi",
                 "id": 29611481745,
                 "name": "Topi Rambut Palsu - Udeng Rambut Palsu - Udeng Topi Rambut Palsu - Udeng Rambut Palsu Pria",
                 "status": 1,
@@ -1839,6 +1844,7 @@
                 }
             },
             {
+                "condition" : "sangat baik",
                 "id": 26662054467,
                 "name": "Udeng Kujang Rambut Palsu - Udeng Rambut Palsu - Topi Rambut Palsu - Ikat Kepala Sunda",
                 "status": 1,
@@ -2025,6 +2031,7 @@
                 }
             },
             {
+                "condition" : "buruk",
                 "id": 28362158630,
                 "name": "Topi Rambut Palsu Motif Paisley - Topi Wig Rambut Palsu Paisley - Topi Bulu Paisley",
                 "status": 1,
@@ -2269,6 +2276,7 @@
                 }
             },
             {
+                "condition" : "buruk",
                 "id": 24536334723,
                 "name": "Udeng Rambut Palsu Anak - Udeng Rambut Batik Anak - Topi Rambut Palsu Anak - Topi Wig Anak",
                 "status": 1,
@@ -2484,6 +2492,7 @@
                 }
             },
             {
+                "condition" : "buruk",
                 "id": 24486191891,
                 "name": "Topi Rambut Palsu - Topi Rambut Brigez - Topi Rambut XTC - Topi Bulu - Topi Wig",
                 "status": 1,
@@ -2612,6 +2621,7 @@
                 }
             },
             {
+                "condition" : "buruk",
                 "id": 29410132862,
                 "name": "Udeng Rambut Palsu - Topi Rambut Palsu - Udeng Merah Putih - Udeng Rambut Palsu Pria",
                 "status": 1,
@@ -2798,6 +2808,7 @@
                 }
             },
             {
+                "condition" : "buruk",
                 "id": 28759922421,
                 "name": "Topi Wig Anak - Topi Rambut Palsu Anak- Topi Cosplay Anime Anak Viral - Topi Sule Anak - Topi Bulu Korea Anak",
                 "status": 1,
@@ -3100,6 +3111,7 @@
                 }
             },
             {
+                "condition" : "buruk",
                 "id": 26110563106,
                 "name": "Topi Rambut Suporter Timnas - Topi Rambut Persib - Topi Rambut Persija - Topi Rambut Arema - Topi Rambut Madura United - Topi Rambut Suporter Bola",
                 "status": 1,

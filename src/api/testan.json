@@ -17,55 +17,19 @@
             "start_time": 1726678800,
             "total_budget": 0
           },
-          "manual_product_ads": {
-            "bidding_strategy": "manual",
-            "item_id": 22410132862,
-            "product_placement": ["targeting", "search_product"],
-            "bidding_price": 30000,
-            "target_audience": null
-          },
           "image": "id-11134207-7r990-lzty4rul199c76",
           "report": {
             "broad_gmv": 4900000,
             "checkout": 0,
             "impression": 1200,
-            "click": 168,
+            "click": 1680,
             "ctr": 5.5,
-            "cost": 300000
+            "cost": 3000
           },
           "search_brand_ads": null,
           "state": "ongoing",
           "title": "Topi Rambut Supporter Bola - Supporter Esport - Topi Rambut Palsu Palestina"
-        },
-        {
-          "campaign": {
-            "campaign_id": 277230066,
-            "daily_budget": 300000,
-            "end_time": 0,
-            "start_time": 1726678800,
-            "total_budget": 0
-          },
-          "manual_product_ads": {
-            "bidding_strategy": "manual",
-            "item_id": 29410132862,
-            "product_placement": ["targeting"],
-            "bidding_price": 10000,
-            "target_audience": null
-          },
-          "image": "id-11134207-7r98r-lzwqfezigcrx02",
-          "report": {
-            "broad_gmv": 4900000,
-            "checkout": 0,
-            "impression": 1200,
-            "click": 168,
-            "ctr": 5.5,
-            "cost": 300000
-          },
-          "search_brand_ads": null,
-          "state": "ongoing",
-          "title": "Topi Rambut Palestina - Topi Rambut Palsu - Topi Wig Palestina - Topi Bulu"
         }
-        // and more data
       ],
       "total": 400
     }
