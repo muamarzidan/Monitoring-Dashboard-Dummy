@@ -46,7 +46,7 @@ export default function MerchantPage() {
     <DashboardLayout>
       <div className="container-fluid">
         <h3 className="my-1 fw-semibold">Custom KPI</h3>
-        <div className="py-4">
+        <div className="py-3eecee">
           <div className="d-flex justify-content-between align-items-center bg-dark text-white p-3 rounded">
             <div style={{ flex: 1 }}>Nama KPI</div>
             <div style={{ flex: 1, textAlign: "center" }}>Value</div>

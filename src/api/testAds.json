@@ -1,0 +1,80 @@
+{
+  "code": 200,
+  "status": "OK",
+  "message": "Product ads scraped successfully.",
+  "data": {
+    "code": 0,
+    "msg": "OK",
+    "debug_detail": "",
+    "validation_error_list": null,
+    "data": {
+      "entry_list": [
+        {
+          "campaign": {
+            "campaign_id": 277232042,
+            "daily_budget": 300000,
+            "end_time": 0,
+            "start_time": 1726678800,
+            "total_budget": 0
+          },
+          "image": "id-11134207-7r990-lzty4rul199c76",
+          "report": {
+            "broad_gmv": 4900000,
+            "checkout": 0,
+            "impression": 1200,
+            "click": 100,
+            "ctr": 5.5,
+            "cost": 3000
+          },
+          "search_brand_ads": null,
+          "state": "ongoing",
+          "title": "Topi Rambut Supporter Bola - Supporter Esport - Topi Rambut Palsu Palestina"
+        },
+        {
+          "campaign": {
+            "campaign_id": 288232042,
+            "daily_budget": 300000,
+            "end_time": 0,
+            "start_time": 1726878800,
+            "total_budget": 0
+          },
+          "image": "id-11134207-7r990-lzty4rul199c76",
+          "report": {
+            "broad_gmv": 4900000,
+            "checkout": 0,
+            "impression": 1500,
+            "click": 100,
+            "ctr": 5.5,
+            "cost": 4000
+          },
+          "search_brand_ads": null,
+          "state": "ongoing",
+          "title": "Topi Ketek"
+        },
+        {
+          "campaign": {
+            "campaign_id": 288232042,
+            "daily_budget": 300000,
+            "end_time": 0,
+            "start_time": 1727378800,
+            "total_budget": 0
+          },
+          "image": "id-11134207-7r990-lzty4rul199c76",
+          "report": {
+            "broad_gmv": 4900000,
+            "checkout": 0,
+            "impression": 1500,
+            "click": 100,
+            "ctr": 5.5,
+            "cost": 4000
+          },
+          "search_brand_ads": null,
+          "state": "ongoing",
+          "title": "Topi Ketek"
+        },
+        // dan data lainnyaa
+      ],
+      "total": 3
+    }
+  }
+}

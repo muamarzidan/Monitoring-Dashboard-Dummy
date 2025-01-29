@@ -13,6 +13,7 @@ import convertPercentage from "../utils/convertPercentage";
 import calculateClickConvertionPercentage from "../utils/calculateClickConvertPercentage";
 import { DEFAULT_BIDDING } from "../constant/const";
 
+
 dayjs.extend(isBetween);
 const AdsTable = ({ data }) => {
   const [startDate, setStartDate] = useState("2024-09-01");
@@ -82,10 +83,6 @@ const AdsTable = ({ data }) => {
       option.label.toLowerCase().includes(searchProductChart.toLowerCase())
     );
   }, [options, searchProductChart]);
-  //inherit
-  useMemo(() => {
-    setSelectedOptions(options.slice(0, 10));
-  }, [options]);
 
   const handleDateChange = (type, value) => {
     if (type === "start") {
@@ -105,7 +102,7 @@ const AdsTable = ({ data }) => {
 
   const chartData = useMemo(() => {
     const labels = Array.from({ length: 30 }, (_, i) => `${i + 1}`);
-
+  
     const metricColors = {
       impression: "#C61C1C", 
       click: "#EAE200",
@@ -116,60 +113,75 @@ const AdsTable = ({ data }) => {
       cost: "#2D2D2D",
       broad_roi: "#DD9E00",
     };
-
-    const datasets = filteredByDate.map((entry, index) => {
-      if (!selectedOptions.some((option) => option.value === index))
-        return null;
-
-      let metric = null;
-
-      const activeMetric = activeMetrics[0]; 
-      switch (activeMetric) {
-        case "impression":
-          metric = entry.report.impression;
-          break;
-        case "click":
-          metric = entry.report.click;
-          break;
-        case "ctr":
-          metric = entry.report.ctr * 100;
-          break;
-        case "broad_order":
-          metric = entry.report.broad_order;
-          break;
-        case "broad_order_amount":
-          metric = entry.report.broad_order_amount;
-          break;
-        case "broad_gmv":
-          metric = entry.report.broad_gmv;
-          break;
-        case "cost":
-          metric = entry.report.cost;
-          break;
-        case "broad_roi":
-          metric = entry.report.broad_roi;
-          break;
-        default:
-          break;
-      }
-
-      const data = Array(30).fill(0);
-      const startIndex =
-        new Date(entry.campaign.start_time * 1000).getDate() - 1;
-      data[startIndex] = metric;
-
-      let customIndex = index+1;
-      return {
-        label: "Produk " + customIndex,
-        data,
-        borderColor: metricColors[activeMetric] || "#000",
-        fill: false,
-        borderWidth: 2,
-        tension: 0.4,
-      };
+  
+    const datasets = [];
+  
+    activeMetrics.forEach((activeMetric) => {
+      filteredByDate.forEach((entry, index) => {
+        if (!selectedOptions.some((option) => option.value === index))
+          return;
+  
+        let metric = null;
+  
+        switch (activeMetric) {
+          case "impression":
+            metric = entry.report.impression;
+            break;
+          case "click":
+            metric = entry.report.click;
+            break;
+          case "ctr":
+            metric = entry.report.ctr * 100;
+            break;
+          case "broad_order":
+            metric = entry.report.broad_order;
+            break;
+          case "broad_order_amount":
+            metric = entry.report.broad_order_amount;
+            break;
+          case "broad_gmv":
+            metric = entry.report.broad_gmv;
+            break;
+          case "cost":
+            metric = entry.report.cost;
+            break;
+          case "broad_roi":
+            metric = entry.report.broad_roi;
+            break;
+          default:
+            break;
+        }
+  
+        const data = Array(30).fill(0);
+        const startIndex =
+          new Date(entry.campaign.start_time * 1000).getDate() - 1;
+        data[startIndex] = metric;
+  
+        let customIndex = index + 1;
+  
+        datasets.push({
+          label: `Produk ${customIndex}`,
+          data,
+          borderColor: metricColors[activeMetric] || "#000",
+          fill: false,
+          borderWidth: 2,
+          tension: 0.4,
+        });
+      });
     });
-
-    return { labels, datasets: datasets.filter(Boolean) };
+  
+    if (datasets.length === 0) {
+      datasets.push({
+        label: `Produk Default`,
+        data: Array(30).fill(0),
+        borderColor: "#000000",
+        fill: false,
+        borderWidth: 1,
+        tension: 0.4,
+      });
+    }
+  
+    return { labels, datasets };
   }, [filteredByDate, selectedOptions, activeMetrics]);
 
   const toggleMetric = (metric) => {
@@ -186,7 +198,7 @@ const AdsTable = ({ data }) => {
     { label: "Max", value: "product_max" },
     { label: "Min", value: "product_min" },
   ];
-  //inherit
+
   const handleTypeChange = (selected) => {
     setSelectedTypes(selected || []);
   };

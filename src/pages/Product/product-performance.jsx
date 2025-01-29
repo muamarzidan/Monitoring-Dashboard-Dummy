@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import DashboardLayout from "../../components/DashboardLayout";
+import * as XLSX from "xlsx";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -11,13 +11,12 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import Papa from "papaparse";
 
+import DashboardLayout from "../../components/DashboardLayout";
 import { ButtonFilterChart } from "../../components/buttonFilterChart";
 import { formatDate } from "../../utils/formatDate";
 import { generateDateRange } from "../../utils/generateDateRange";
 import dataProduct from "../../api/dummyAds.json";
-
 
 ChartJS.register(
   CategoryScale,
@@ -34,6 +33,7 @@ export default function ProductPerformancePage() {
   const [filteredData, setFilteredData] = useState([]);
   const [xLabels, setXLabels] = useState([]);
   const [activeFilter, setActiveFilter] = useState("daily");
+  const [groupedData, setGroupedData] = useState({});
 
   useEffect(() => {
     const labels = generateDateRange(startDate, endDate);
@@ -43,14 +43,79 @@ export default function ProductPerformancePage() {
 
   const fetchData = async () => {
     const data = dataProduct;
-    setFilteredData(data.data.data.entry_list);
-  };
-
-  const getDataForDate = (date, key) => {
-    return filteredData.reduce((sum, item) => {
+    const entries = data.data.data.entry_list;
+  
+    const filteredEntries = entries.filter((item) => {
       const entryDate = formatDate(item.campaign.start_time);
-      return entryDate === date ? sum + (item.report[key] || 0) : sum;
-    }, 0);
+      return entryDate >= startDate && entryDate <= endDate;
+    });
+  
+    setFilteredData(filteredEntries);
+  
+    const initialXLabels = generateDateRange(startDate, endDate);
+    const initialGroupedData = groupDataByFilter(filteredEntries, initialXLabels, "daily");
+    
+    setXLabels(initialXLabels);
+    setGroupedData(initialGroupedData);
+    setActiveFilter("daily");
+  };
+  
+
+  // const fetchData = async () => {
+  //   const data = dataProduct;
+  //   const entries = data.data.data.entry_list;
+  //   setFilteredData(entries);
+
+  //   const initialXLabels = generateDateRange(startDate, endDate);
+  //   const initialGroupedData = groupDataByFilter(entries, initialXLabels, "daily");
+    
+  //   setXLabels(initialXLabels);
+  //   setGroupedData(initialGroupedData);
+  //   setActiveFilter("daily");
+  // };
+  
+  // const fetchData = async () => {
+  //   const data = dataProduct;
+  //   setFilteredData(data.data.data.entry_list);
+  // };
+
+  const keyColors = {
+    // cost: "hsl(120, 70%, 50%)",
+    impression: "hsl(0, 70%, 50%)",
+    click: "hsl(240, 70%, 50%)",
+  };  
+
+  const groupDataByFilter = (data, labels, filter) => {
+    const groupedData = {};
+    
+    labels.forEach((label) => {
+      groupedData[label] = [];
+    });
+
+    data.forEach((item) => {
+      const entryDate = formatDate(item.campaign.start_time);
+  
+      let targetLabel;
+      if (filter === "weekly") {
+        targetLabel = labels.find((label) => new Date(entryDate) <= new Date(label)) || labels[labels.length - 1];
+      } else if (filter === "monthly") {
+        targetLabel = labels.find((label) => entryDate.startsWith(label));
+      } else if (filter === "yearly") {
+        targetLabel = labels.find((label) => entryDate.startsWith(label));
+      } else {
+        targetLabel = entryDate;
+      }
+  
+      if (targetLabel && groupedData[targetLabel]) {
+        groupedData[targetLabel].push({
+          // cost: item.report.cost || 0,
+          impression: item.report.impression || 0,
+          click: item.report.click || 0,
+        });
+      }
+    });
+
+    return groupedData;
   };
 
   const isDailyEnabled = xLabels.length > 0;
@@ -83,37 +148,23 @@ export default function ProductPerformancePage() {
         newXLabels = generateDateRange(startDate, endDate).slice(0, 31);
     }
 
+    const groupedData = groupDataByFilter(filteredData, newXLabels, filter);
     setXLabels(newXLabels);
+    setGroupedData(groupedData);
     setActiveFilter(filter);
   };
 
-  const generateColors = (count) => {
-    const colors = [];
-    for (let i = 0; i < count; i++) {
-      const hue = (360 / count) * i;
-      colors.push(`hsl(${hue}, 70%, 50%)`);
-    }
-    return colors;
-  };
-
-  const productColors = generateColors(filteredData.length);
   const chartData = {
     labels: xLabels,
-    datasets: filteredData.flatMap((item, index) => [
-      {
-        label: `Impression`,
-        data: xLabels.map((date) => getDataForDate(date, "impression")),
-        borderColor: productColors[index],
-        fill: false,
-      },
-      {
-        label: `${item.title} - Click`,
-        data: xLabels.map((date) => getDataForDate(date, "click")),
-        borderColor: productColors[index],
-        borderDash: [5, 5],
-        fill: false,
-      },
-    ]),
+    datasets: Object.keys(keyColors).map((key) => ({
+      label: key,
+      data: xLabels.map((label) => 
+        groupedData[label] ? groupedData[label].map(item => item[key]) : []
+      ).flat(),
+      borderColor: keyColors[key],
+      fill: false,
+      tension: 0.3,
+    })),
   };
 
   function getPerformanceType(report) {
@@ -127,34 +178,25 @@ export default function ProductPerformancePage() {
   }
 
   const handleDownloadCSV = () => {
-    const csvData = filteredData.map((product, index) => ({
+    const dataToExport = filteredData.map((product, index) => ({
       No: index + 1,
       Produk: product.title,
       Modal: product.report.cost.toLocaleString(),
       Performance: product.performance_type ?? "Tidak ada data",
     }));
   
-    const csv = Papa.unparse(csvData, {
-      quotes: true, 
-      delimiter: ",",
-      header: true,
-    });
-  
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "performa_produk.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+    
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Performa Produk");
+    XLSX.writeFile(workbook, "performa_produk.xlsx");
   };
 
   return (
     <>
       <DashboardLayout>
         <div className="container">
-          <h2 className="pb-3 fw-semibold">Performa Produk</h2>
+          <h2 className="fw-semibold">Performa Produk</h2>
           <div className="d-flex justify-content-between mb-4">
             {/* button filter data chart */}
             <div className="d-flex gap-2 align-items-end">
@@ -221,6 +263,7 @@ export default function ProductPerformancePage() {
               </div>
             </div>
           </div>
+
           {/* Chart */}
           <div className="row">
             <div className="col-12">
@@ -237,9 +280,10 @@ export default function ProductPerformancePage() {
               />
             </div>
           </div>
+
           {/* Tabel */}
           <div className="d-flex justify-content-between" style={{ marginTop: "3rem" }}>
-            <h6 className="pb-2 align-self-end">
+            <h6 classNam e="pb-2 align-self-end">
               Kualitas peforma produk
             </h6>
             <button onClick={handleDownloadCSV} className="mb-3 px-4 btn btn-primary">
