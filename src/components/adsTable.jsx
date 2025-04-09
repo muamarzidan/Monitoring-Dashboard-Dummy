@@ -913,33 +913,33 @@ const AdsTable = ({ data }) => {
                               ? "Iklan Manual"
                               : "Iklan Otomatis"}
                           </span>
-                          <div className="w-full d-flex gap-1 align-items-center">
-                            <div
-                              className={`marker ${
-                                entry.state === "ongoing"
-                                  ? "animated-circle"
-                                  : ""
-                              }`}
-                              style={{
-                                backgroundColor:
-                                  entry.state === "ongoing" ? "#00EB3FFF" : "gray",
-                              }}
-                            ></div>
-                            <span
-                              className="fw-light"
-                              style={{
-                                fontSize: "14px",
-                                color:
+                            <div className="w-full d-flex gap-1 align-items-center">
+                              <div
+                                className={`marker ${
                                   entry.state === "ongoing"
-                                    ? "inherit"
-                                    : "gray",
-                              }}
-                            >
-                              {entry.state === "ongoing"
-                                ? "Berjalan"
-                                : "Nonaktif"}
-                            </span>
-                          </div>
+                                    ? "animated-circle"
+                                    : ""
+                                }`}
+                                style={{
+                                  backgroundColor:
+                                    entry.state === "ongoing" ? "#00EB3FFF" : "gray",
+                                }}
+                              ></div>
+                              <span
+                                className="fw-light"
+                                style={{
+                                  fontSize: "14px",
+                                  color:
+                                    entry.state === "ongoing"
+                                      ? "inherit"
+                                      : "gray",
+                                }}
+                              >
+                                {entry.state === "ongoing"
+                                  ? "Berjalan"
+                                  : "Nonaktif"}
+                              </span>
+                            </div>
                         </div>
                       </Link>
                       {/* Modal */}
